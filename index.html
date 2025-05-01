@@ -1,0 +1,1333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GPE KIX Africa Symposium Digital Repository</title>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background-color: #f5f5f5;
+      color: #333;
+    }
+
+    .logos {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: white;
+      padding: 10px 40px;
+    }
+
+    .logos img {
+      width: 400px;
+      height: 120px;
+      object-fit: contain;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .banner {
+      background-color: #2980b9;
+      color: white;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .slider-container {
+      position: relative;
+      width: 100%;
+      height: 400px;
+      overflow: hidden;
+      margin: 2rem 0;
+      border-radius: 8px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .slider {
+      display: flex;
+      width: 300%;
+      height: 100%;
+      transition: transform 0.5s ease-in-out;
+    }
+
+    .slide {
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+
+    .slide-content {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      padding: 2rem;
+      background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+      color: white;
+    }
+
+    .slider-controls {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      display: flex;
+      z-index: 10;
+    }
+
+    .slider-controls button {
+      background-color: rgba(255, 255, 255, 0.7);
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      margin: 0 5px;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.3s ease;
+    }
+    
+    .slider-controls button:hover {
+      background-color: white;
+    }
+    
+    .slider-dots {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      z-index: 10;
+    }
+    
+    .slider-dots span {
+      width: 12px;
+      height: 12px;
+      background-color: rgba(255,255,255,0.5);
+      border-radius: 50%;
+      margin: 0 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    
+    .slider-dots span.active {
+      background-color: white;
+    }
+
+    .download-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .download-block {
+      background: white;
+      flex: 1 1 300px;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .download-block h3 {
+      color: #1a5276;
+    }
+
+    .btn {
+      display: inline-block;
+      background-color: #2980b9;
+      color: white;
+      padding: 0.5rem 1rem;
+      margin: 0.5rem;
+      text-decoration: none;
+      border-radius: 4px;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn:hover {
+      background-color: #1a5276;
+    }
+
+    /* Blog Section Styles */
+    .blog-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+
+    .blog-block {
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .blog-image {
+      height: 200px;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .blog-content {
+      padding: 1.5rem;
+    }
+
+    .lang-tabs {
+      display: flex;
+      margin-bottom: 1rem;
+    }
+
+    .lang-tab {
+      padding: 0.5rem 1rem;
+      margin-right: 10px;
+      cursor: pointer;
+      border-radius: 4px 4px 0 0;
+      border: 1px solid transparent;
+      border-bottom: none;
+      background-color: #f5f5f5;
+    }
+
+    .lang-tab.active {
+      background-color: #2980b9;
+      color: white;
+      border-color: #ddd;
+    }
+
+    .lang-content {
+      display: none;
+    }
+
+    .lang-content.active {
+      display: block;
+    }
+
+    .partners-image {
+      width: 100%;
+      height: 100px;
+      object-fit: cover;
+      display: block;
+      margin: 2rem 0;
+      border-radius: 8px;
+    }
+    
+    /* Presenters Section */
+    .presenters-container {
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+      margin: 2rem 0;
+    }
+
+    .presenters-container h2 {
+      color: #1a5276;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+
+    @media (max-width: 768px) {
+      .logos img {
+        width: 200px;
+        height: 60px;
+      }
+      
+      .slider-container {
+        height: 300px;
+      }
+      
+      .blog-container {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header Logos -->
+  <header>
+    <div class="logos">
+      <img src="assets/kix19.png" alt="Left Logo" />
+      <img src="assets/kix21.png" alt="Right Logo" />
+    </div>
+  </header>
+
+  <!-- Main Section -->
+  <section id="symposium2024" class="page active">
+    <div class="banner">
+      <div class="container">
+        <h1>GPE KIX Africa 2024 Symposium Digital Repository</h1>
+        <p>Theme: "Building Resilient Systems for Increased Access to Inclusive Quality and Relevant Education in Africa"</p>
+      </div>
+    </div>
+
+    <!-- Slider -->
+    <div class="container content">
+      <div class="slider-container">
+        <div class="slider" id="slider2024">
+          <div class="slide" style="background-image: url('assets/slide1.jpeg')">
+            <div class="slide-content">
+              <h2>-</h2>
+              <p>-</p>
+            </div>
+          </div>
+          <div class="slide" style="background-image: url('assets/slide2.jpeg')">
+            <div class="slide-content">
+              <h2>-</h2>
+              <p>-</p>
+            </div>
+          </div>
+          <div class="slide" style="background-image: url('assets/slide3.jpeg')">
+            <div class="slide-content">
+              <h2>-</h2>
+              <p>-</p>
+            </div>
+          </div>
+        </div>
+        <div class="slider-controls">
+          <button class="prev-btn" onclick="moveSlide('slider2024', -1)">←</button>
+          <button class="next-btn" onclick="moveSlide('slider2024', 1)">→</button>
+        </div>
+        <div class="slider-dots" id="dots2024">
+          <span class="dot active" data-index="0" onclick="goToSlide('slider2024', 0)"></span>
+          <span class="dot" data-index="1" onclick="goToSlide('slider2024', 1)"></span>
+          <span class="dot" data-index="2" onclick="goToSlide('slider2024', 2)"></span>
+        </div>
+      </div>
+
+      <!-- Downloads -->
+      <h2>2024 Symposium Downloads</h2>
+      <div class="download-container">
+        <div class="download-block">
+          <h3>Book of Abstracts</h3>
+          <p>Download in your preferred language:</p>
+          <a href="assets/book_abstracts_eng.pdf" target="_blank" class="btn">English</a>
+          <a href="assets/book_abstracts_fr.pdf" target="_blank" class="btn">French</a>
+        </div>
+
+        <div class="download-block">
+          <h3>Fact Sheet</h3>
+          <p>Download in your preferred language:</p>
+          <a href="assets/fact_eng.pdf" target="_blank" class="btn">English</a>
+          <a href="assets/fact_fr.pdf" target="_blank" class="btn">French</a>
+          <a href="assets/fact_pt.pdf" target="_blank" class="btn">Portuguese</a>
+        </div>
+
+        <div class="download-block">
+          <h3>Symposium Report</h3>
+          <p>Download the complete report of the symposium.</p>
+          <a href="assets/symposium2024_report.pdf" target="_blank" class="btn">Download</a>
+        </div>
+      </div>
+
+      <!-- Blog Section -->
+      <h2>Symposium Blog Articles</h2>
+      <div class="blog-container">
+        <!-- Blog Block 1 -->
+        <div class="blog-block">
+          <div class="blog-image" style="background-image: url('assets/blog1.png')"></div>
+          <div class="blog-content">
+            <div class="lang-tabs">
+              <div class="lang-tab active" onclick="changeBlogLanguage(this.parentElement.parentElement, 'en')">English</div>
+              <div class="lang-tab" onclick="changeBlogLanguage(this.parentElement.parentElement, 'fr')">French</div>
+              <div class="lang-tab" onclick="changeBlogLanguage(this.parentElement.parentElement, 'pt')">Portuguese</div>
+              
+            </div>
+            
+            <div class="lang-content active" data-lang="en">
+              <h3>Innovation and Evidence in African Education: Key Symposium Findings</h3>
+              <p>The symposium highlighted the critical role of innovation, evidence-based policymaking, and collaboration in transforming education outcomes. A wealth of insights and actionable recommendations emerged from the discussions.</p>
+              <a href="blog1_en.html" class="btn" target="_blank">Read More</a>
+            </div>
+            
+            <div class="lang-content" data-lang="fr">
+              <h3>Innovation et données probantes dans l'éducation africaine : Principales conclusions du symposium</h3>
+              <p>L'un des thèmes majeurs du symposium a été l'importance d'utiliser la recherche et les données pour éclairer les politiques éducatives. À travers l'Afrique, on reconnaît de plus en plus que les décisions fondées sur des preuves peuvent conduire à une allocation plus efficace des ressources, réduire les inégalités et améliorer les résultats d'apprentissage.</p>
+              <a href="blog1_fr.html" class="btn" target="_blank">Lire la suite</a>
+            </div>
+            
+            <div class="lang-content" data-lang="pt">
+              <h3>Inovação e Evidências na Educação Africana: Principais Conclusões do Simpósio</h3>
+              <p>O simpósio destacou o papel crítico da inovação, políticas baseadas em evidências e colaboração na transformação dos resultados educacionais. Muitos insights e recomendações acionáveis emergiram das discussões. Aqui estão algumas das principais conclusões e lições do evento</p>
+              <a href="blog1_pt.html" class="btn" target="_blank">Leia mais</a>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Blog Block 2 -->
+        <div class="blog-block">
+          <div class="blog-image" style="background-image: url('assets/blog2.png')"></div>
+          <div class="blog-content">
+            <div class="lang-tabs">
+              <div class="lang-tab active" onclick="changeBlogLanguage(this.parentElement.parentElement, 'en')">English</div>
+              <div class="lang-tab" onclick="changeBlogLanguage(this.parentElement.parentElement, 'fr')">French</div>
+              <div class="lang-tab" onclick="changeBlogLanguage(this.parentElement.parentElement, 'pt')">Portuguese</div>
+            </div>
+            
+            <div class="lang-content active" data-lang="en">
+              <h3>KIX 2024 Symposium and Policy Implications for 21st Century African Education
+</h3>
+              <p>The symposium highlighted the need to rethink African education systems to align with the demands of the 21st century. Traditional curricula and teaching methods are becoming outdated, as they fail to equip students with the critical thinking, problem-solving, and digital skills required in today's global economy.
+
+</p>
+              <a href="blog2_en.html" class="btn" target="_blank">Read More</a>
+            </div>
+            
+            <div class="lang-content" data-lang="fr">
+              <h3>Symposium KIX 2024 et implications politiques pour l'éducation africaine du 21ème siècle</h3>
+              <p>Axé sur le thème "Éduquer un Africain adapté au 21ème siècle : Bâtir des systèmes éducatifs résilients pour un accès accru à un apprentissage inclusif, tout au long de la vie, de qualité et pertinent en Afrique", le symposium a souligné le besoin urgent de politiques transformatrices pour relever les défis éducatifs du continent.</p>
+              <a href="blog2_fr.html" class="btn" target="_blank">Lire la suite</a>
+            </div>
+            
+            <div class="lang-content" data-lang="pt">
+              <h3>Simpósio KIX 2024 e Implicações Políticas para a Educação Africana no Século 21</h3>
+              <p>Sob o tema "Educar um Africano para o século 21: Construindo sistemas educacionais resilientes para aumentar o acesso a aprendizados inclusivos, ao longo da vida, de qualidade e relevantes na África", o simpósio destacou a necessidade urgente de políticas transformadoras para enfrentar os desafios educacionais do continente</p>
+              <a href="blog2_pt.html" class="btn" target="_blank">Leia mais</a>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Blog Block 3 -->
+        <div class="blog-block">
+          <div class="blog-image" style="background-image: url('assets/blog3.png')"></div>
+          <div class="blog-content">
+            <div class="lang-tabs">
+              <div class="lang-tab active" onclick="changeBlogLanguage(this.parentElement.parentElement, 'en')">English</div>
+              <div class="lang-tab" onclick="changeBlogLanguage(this.parentElement.parentElement, 'fr')">French</div>
+              <div class="lang-tab" onclick="changeBlogLanguage(this.parentElement.parentElement, 'pt')">Portuguese</div>
+            </div>
+            
+            <div class="lang-content active" data-lang="en">
+              <h3>Strengthening Education Systems: Lessons from GPE African Countries
+</h3>
+              <p>One of the most resounding themes of the symposium was the importance of collaboration between governments, researchers, and education stakeholders. The symposium emphasized the critical role of evidence-based policymaking in educational reforms. It emphasized that rigorous research should inform education policy decisions to ensure efficient resource allocation, reduce inequality, and improve learning outcomes.</p>
+              <a href="blog3_en.html" class="btn" target="_blank">Read More</a>
+            </div>
+            
+            <div class="lang-content" data-lang="fr">
+              <h3>Renforcer les systèmes éducatifs : Leçons des pays africains du GPE</h3>
+              <p>Axé sur le thème "Éduquer un Africain adapté au 21ème siècle : Bâtir des systèmes éducatifs résilients pour un accès accru à un apprentissage inclusif, tout au long de la vie, de qualité et pertinent en Afrique", le symposium a permis de partager...</p>
+              <a href="blog3_fr.html" class="btn" target="_blank">Lire la suite</a>
+            </div>
+            
+            <div class="lang-content" data-lang="pt">
+              <h3>Fortalecendo Sistemas Educacionais: Lições dos Países Africanos do GPE</h3>
+              <p>Sob o tema "Educar um Africano para o século 21: Construindo sistemas educacionais resilientes para aumentar o acesso a aprendizados inclusivos, ao longo da vida, de qualidade e relevantes na África", o simpósio compartilhou conhecimentos, inovações e estratégias baseadas em evidências para enfrentar os urgentes desafios educacionais do continente.</p>
+              <a href="blog3_pt.html" class="btn" target="_blank">Leia mais</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Partners -->
+      
+      <div class="presenters-container">
+        <h2>Symposium Presenters</h2>
+        
+        <table id="authorsTable" class="display">
+          <thead>
+              <tr>
+                  <th>Speakers</th>
+                  <th>Titles</th>
+                  <th>Institutions</th>
+                  <th>Country</th>
+                  <th>Topic</th>
+                  <th>Abstract</th>
+                  <th>Presentation</th>
+              </tr>
+          </thead>
+          <tbody>
+              <!-- Data rows will be added here -->
+          </tbody>
+        </table>
+
+        <div id="abstractModal" style="display:none;position:fixed;z-index:1000;left:0;top:0;width:100%;height:100%;background-color:rgba(0,0,0,0.5)">
+            <div style="background-color:#fefefe;margin:5% auto;padding:20px;border:1px solid #888;width:80%;max-height:80vh;overflow-y:auto">
+                <span id="closeModal" style="color:#aaa;float:right;font-size:28px;font-weight:bold;cursor:pointer">&times;</span>
+                <div id="modalContent"></div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </section>
+    
+    
+    <script>
+        const data = [
+            {
+    Speakers: "Abdoul-Aziz Adama",
+    Titles: "Right-Fit Evidence and Policy Manager",
+    Institutions: "Innovations for Poverty Action",
+    Country: "Côte d'Ivoire",
+    Topic: "Valorisation des données du Système Intégré de Gestion de Données (SIGE) par la mise en place du Laboratoire pour l’Éducation (Ed Lab) en Côte d’Ivoire",
+    Abstract: "Cette présentation met en lumière la création du Laboratoire d'éducation (Ed Lab) en Côte d'Ivoire en tant que réforme clé pour optimiser l'utilisation des données du Système intégré de gestion des données (SIGE) pour une prise de décision fondée sur des preuves. L'étude aborde la sous-utilisation des données éducatives dans le dialogue politique, un défi observé dans de nombreuses nations africaines. Ed Lab relie les données du SIGE aux cycles de prise de décision, améliorant ainsi la gestion de l'éducation grâce à une meilleure analyse des données, à la recherche et à l'intégration des politiques. Soutenue par Innovations for Poverty Action (IPA) et la Jacobs Foundation, cette initiative s'inscrit dans le cadre des réformes plus larges de l'éducation en Côte d'Ivoire à la suite des États généraux de l'éducation et de l'alphabétisation (EGENA). Les principaux enseignements soulignent l'abondance des données, mais mettent en évidence la nécessité de mettre à jour les protocoles de qualité et les processus systématiques. Les recommandations portent notamment sur la création de fonds de recherche, la mise en place de cadres juridiques pour l'accès aux données et l'amélioration de la conception du SIGE. L'étude met l'accent sur la promotion d'une culture axée sur les données afin d'améliorer l'efficacité et la responsabilité des politiques éducatives. M. Adama est responsable des données probantes et des politiques à Innovations for Poverty Action, Afrique de l'Ouest francophone. Abdoul-Aziz est titulaire d'une maîtrise en mathématiques appliquées de l'Université Polytechnique de Bobo-Dioulasso au Burkina Faso et d'une maîtrise en mathématiques, économie et statistiques de l'African School of Economics (ASE) au Bénin",
+    Presentation: "<a href='https://drive.google.com/file/d/1KP4ABHjbCTESOSFGd5UFq3Y6BH8porQ0/view?usp=drive_link' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Adam Mohamed",
+    Titles: "National Coordinator",
+    Institutions: "Education for All Somalia",
+    Country: "Somalia",
+    Topic: "Public Perception on Education in Somalia KAP Survey Report (Assessed in Mogadishu, March 2024)",
+    Abstract: "Adam Mohamed's presentation discusses the findings of a Knowledge, Attitudes, and Practices (KAP) survey on education in Somalia, highlighting critical gaps in gender and disability inclusion. Conducted among 120 parents as part of the Somalia Education Out Loud (EOL) project, the study reveals that cultural norms and financial constraints significantly hinder access to education, particularly for girls and children with disabilities. Key findings indicate that 73% of parents prioritize boys' education over girls', while 52.5% prefer sending non-disabled children to school. Additionally, 80% of respondents identify conflict, climate change, and poverty as major barriers to education quality. The majority (62%) of parents do not engage with schools, and over half are unwilling to support girls' education beyond primary level. Recommendations include government provision of free education, improved school feedback systems, and awareness campaigns by civil society to challenge discriminatory norms and promote inclusive education for all Somali children.",
+    Presentation: "<a href='https://drive.google.com/file/d/1I2FF3b3vhCtB8Elw0NY5SRZo5TVOPpNr/view?usp=drive_link' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Adode Houssa Sena Sourou Urielle Jacqueline",
+    Titles: "Doctorant",
+    Institutions: "Institut de Formation et de Recherche Démographiques (IFORD)",
+    Country: "Bénin",
+    Topic: "Éducation préscolaire et développement de la petite enfance",
+    Abstract: "Adode Houssa examine l'état de l'éducation préscolaire et du développement de la petite enfance au Bénin, en soulignant son rôle essentiel dans la construction de l'avenir des enfants. Malgré son importance, le taux brut de scolarisation préscolaire au Bénin n'est que de 16%, avec des disparités régionales importantes allant de 27% dans la Donga à 6% dans l'Alibori. En outre, seuls 31,5 % des enfants âgés de 24 à 59 mois sont en bonne voie de développement. En utilisant les données de l'enquête en grappes à indicateurs multiples 2021-2022 (MICS6), l'étude identifie les facteurs clés influençant le développement de l'enfant, y compris la fréquentation des programmes préscolaires, le lieu de résidence, le retard de croissance, l'exposition aux médias et les difficultés fonctionnelles. Les enfants qui ont participé à des programmes préscolaires sont 2,29 fois plus susceptibles d'être en bonne voie de développement. Les recommandations politiques comprennent l'augmentation du financement public de l'éducation préscolaire, l'amélioration de la formation des enseignants, l'extension de la couverture géographique et la mise en œuvre de campagnes de sensibilisation pour souligner l'importance de l'éducation précoce. Ces mesures visent à améliorer l'accès et l'équité dans l'éducation de la petite enfance au Bénin.",
+    Presentation: "<a href='https://drive.google.com/file/d/1oHrQgjZ4pCnGtev8ivH3iNXxNg8-3Tqf/view?usp=drive_link' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Akpo Dekpo José Giscard",
+    Titles: "Doctorant",
+    Institutions: "University of Abomey-Calavi",
+    Country: "Bénin",
+    Topic: "Leadership et organes de gestion scolaire inclusive dans les Écoles Primaires Publiques au Bénin: Cas des gouvernements et parlements scolaires des EPP de la commune d’Agbangnizoun du département du Zou",
+    Abstract: "Cette présentation explore le rôle des instances de gouvernance scolaire inclusive, en particulier les Gouvernements Scolaires (GS) et les Parlements Scolaires (PS), dans le développement du leadership et l'amélioration des résultats éducatifs dans les écoles primaires publiques du Bénin. L'étude aborde le manque de participation des élèves à la gestion scolaire, facteur contribuant à un faible niveau de confiance en soi, une initiative limitée, et des taux d'abandon scolaire élevés, notamment chez les filles. Mis en œuvre dans le cadre du Plan de Développement de l'École (PDE), les GS et PS permettent aux élèves de participer à la prise de décision, de sensibiliser sur les questions éducatives et sanitaires, et de gérer des projets communautaires tels que les jardins scolaires et les actions de salubrité. Cette approche a développé les compétences de leadership, de communication et de résolution de problèmes chez les élèves, tout en favorisant l'égalité des sexes. L'initiative a donné des résultats prometteurs, tels que la réduction de l'absentéisme et des taux de décrochage, l'amélioration des performances académiques et le renforcement des partenariats école-famille. Les recommandations incluent l'élargissement de ces instances de gouvernance à tous les niveaux éducatifs pour encourager le leadership des élèves et soutenir un système éducatif résilient et inclusif.",
+    Presentation: "<a href='https://drive.google.com/file/d/1jVT_7nHRsOf6ahRhaK4Sx_jiTy2JydDz/view?usp=drive_link' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Alpha Bah",
+    Titles: "Director of Standards & Quality Assurance and Head of EMIS",
+    Institutions: "UNESCO Institute for Statistics",
+    Country: "Gambia",
+    Topic: "Education Data, Data Systems, and Data Use in GPE Partner Countries",
+    Abstract: "This presentation focuses on the findings of the KIX (Knowledge and Innovation Exchange) study by the Global Partnership for Education (GPE), which examines innovations in educational data systems and their impact on decision-making in partner countries. The study highlights tools such as DHIS2 for Education, Data Must Speak (DMS) Positive Deviance, and MICS EAGLE, which have improved data management and promoted evidence-based policies in countries like The Gambia and Uganda. Key findings reveal the underreporting of critical learning metrics and the role of data in identifying high-performing schools, equity gaps, and factors such as female leadership in improving outcomes. Recommendations include sustaining capacity-building efforts, fostering local technical expertise, integrating education data with other sectors, and leveraging data to target marginalized groups.",
+    Presentation: "<a href='https://drive.google.com/file/d/1q0uU7uRMVE7P2HEYKxZuzElZwIQIxfGe/view?usp=drive_link' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Amanuel Araya",
+    Titles: "",
+    Institutions: "Ministry of Education",
+    Country: "Eritrea",
+    Topic: "Making Sense of “Teacher Professionalism” in Eritrea: Scenarios and Suggestions",
+    Abstract: "This study examines teacher professionalism in Eritrea, analyzing its theoretical foundations and practical realities within the country's education system. After decades of systemic pressure and poor student performance, improving teaching quality has been identified as a critical bottleneck for achieving educational transformation. Using qualitative methods, the study involved document analysis, teacher interviews, and reflective observations across four schools, involving 38 teachers. Key findings reveal disparities between theoretical concepts of professionalism and the contextual realities faced by Eritrean educators. Challenges include uncertainties regarding teachers' professional identity, accountability, pedagogical practices, as well as limited collaboration and engagement in research. Recommendations focus on strengthening initial teacher training programs, enhancing continuous professional development, and revising policy objectives to better align them with on-the-ground realities. Addressing these gaps is essential to bolstering teacher professionalism and improving educational outcomes.",
+    Presentation: "<a href='https://drive.google.com/file/d/120UAsfr9V_8LJ6HJHbUa9cs7Th7gqyVp/view?usp=drive_link' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Amenyah Sarr Efua Irène",
+    Titles: "Associate Professor",
+    Institutions: "Université Gaston Berger",
+    Country: "Sénégal",
+    Topic: "Le métier d’enseignant à travers les systèmes éducatifs : Entre Avantage, Attrition et Abandon. Quel développement professionnel soutenir pour une éducation de qualité ?",
+    Abstract: "L’étude d’Amenyah Sarr analyse la profession enseignante dans les systèmes éducatifs africains, mettant en évidence le besoin crucial de développement professionnel pour améliorer la qualité de l’éducation. L’étude identifie des problèmes systémiques tels que des classes surpeuplées, des durées de formation insuffisantes et des taux élevés d’attrition des enseignants dus à de mauvaises conditions de travail et à des perspectives de carrière limitées. À partir de recherches qualitatives et d’études de cas, les résultats soulignent des disparités importantes dans la préparation des enseignants selon les cycles éducatifs, de l’école maternelle au secondaire. La formation des enseignants du préscolaire et du primaire dure souvent moins de deux ans, ce qui limite leur capacité à répondre efficacement aux besoins d’apprentissage fondamentaux. Les enseignants du secondaire bénéficient d’une formation plus longue, mais sont confrontés à des défis liés à la préparation des étudiants et aux inefficacités systémiques. Les recommandations incluent la restructuration des programmes de formation des enseignants pour se concentrer sur l'éducation de la petite enfance et l'amélioration des conditions de travail.",
+    Presentation: "<a href='https://drive.google.com/file/d/1_fDIpAQUvAmcfzo8nm-3kxW9ZlUEfzr5/view?usp=drive_link' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Araba G. Rock Floriant",
+    Titles: "Expert-Enseignant Gestion des projets et Organisations    Organisations, Spécialiste en Éducation",
+    Institutions: "Plan Media & Université d'Abomey-Calavi",
+    Country: "Bénin",
+    Topic: "Accès équitable à l’éducation : Introduction d’une approche formelle et moderne d’éducation de proximité dans les politiques éducatives au Bénin",
+    Abstract: "Cet article explore l'introduction d'approches modernes et formelles d'éducation de proximité pour améliorer l'accès équitable à l'éducation au Bénin. Avec 25 % des enfants en âge scolaire primaire non scolarisés et des groupes marginalisés, tels que les enfants handicapés, confrontés à une exclusion systémique, l’étude aborde les barrières à l'inclusion dans le système éducatif. Réalisée dans 10 villages des départements de Ouémé et Plateau, l’étude a utilisé des enquêtes qualitatives et quantitatives pour évaluer les conditions d'accès et les défis. Les résultats clés incluent un taux de scolarisation de 40 % et une amélioration de 30 % des performances des élèves, avec une inclusion accrue des enfants marginalisés. Les recommandations mettent l'accent sur l'adaptation des politiques éducatives aux besoins des groupes marginalisés, la promotion de l'engagement communautaire et la mise en valeur de l’inscription des filles et des enfants handicapés. L’étude plaide pour l’intégration des écoles de proximité dans la stratégie nationale d’éducation du Bénin pour améliorer l’accessibilité et l’inclusivité, garantissant que nul enfant ne soit laissé pour compte dans son parcours éducatif.",
+    Presentation: "<a href='https://drive.google.com/file/d/1yUB2Wn7ORf9ILfAk0z9oK8jedsE-ZKvF/view?usp=drive_link' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Atanga Napthalin",
+    Titles: "Education Secretary of the Cameroon Baptist Convention",
+    Institutions: "NEXTGenu-ST",
+    Country: "Cameroun",
+    Topic: "Addressing Deficiencies in Early Mathematics Education: A Case for Curriculum Reform in Sub-Saharan Africa",
+    Abstract: "La présentation d'Atanga met en lumière les lacunes critiques dans l'éducation mathématique précoce en Afrique subsaharienne, où plus de 40 % des élèves n’arrivent pas à maîtriser les bases de l'arithmétique à la fin de la troisième année, comme l'indique l'enquête PASEC 2019. Les données STEPS provenant de huit écoles au Cameroun révèlent que plus de 70 % des élèves dépendent encore du comptage pour effectuer des additions à ce stade, les exposant ainsi à un risque de marginalisation en mathématiques. L'étude plaide en faveur de la présentation des nombres comme étant composés de plus petits nombres et de l'introduction différée du format en colonnes jusqu'à ce que les élèves développent une compréhension plus profonde de l'arithmétique. Parmi les recommandations, il est suggéré de retirer des termes tels que « retenue » et « emprunt » des programmes et d’introduire la soustraction sous la forme de \"distance\" avant de passer aux méthodes traditionnelles. Ces interventions, mises en œuvre par des formations ciblées pour les enseignants, inspecteurs et superviseurs, visent à réduire la dépendance au comptage par cœur et à améliorer les compétences fondamentales en numératie. Cette approche améliore les résultats d'apprentissage sans nécessiter de réformes majeures des programmes scolaires.",
+    Presentation: "<a href='https://drive.google.com/file/d/1Z6AcBQsPpGBq6XJCY_W8Q_4IvzCybecM/view?usp=drive_link' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Atsu Jerry Aziawa",
+    Titles: "Director of Implementation",
+    Institutions: "HISP West and Central Africa",
+    Country: "Togo",
+    Topic: "Enhancing accessibility to examination results: A Case Study of WhatsApp Chatbot",
+    Abstract: "Cette étude présente une approche innovante pour améliorer la transparence éducative au Togo via un chatbot WhatsApp pour la diffusion des résultats d'examen. Tirant parti du taux élevé de pénétration mobile (75,55 %) et de l’utilisation généralisée de WhatsApp, le chatbot a été lancé en juin 2024 pour résoudre les problèmes récurrents d'accès aux résultats scolaires, tels que la congestion des serveurs et l'accessibilité limitée dans les zones rurales. Développé en collaboration avec le ministère de l’Éducation du Togo et HISP West and Central Africa, le chatbot permet aux étudiants de récupérer leurs résultats en envoyant leur numéro d'examen et leur nom via WhatsApp. Ce système a considérablement amélioré l'efficacité, supprimé les coûts supplémentaires pour les utilisateurs, et garanti la sécurité des données via la plateforme DHIS2. Les retours des utilisateurs soulignent la commodité et la fiabilité du système, transformant la gestion des résultats d'un processus manuel en une solution numérique moderne. Cette initiative illustre le potentiel de la technologie pour promouvoir une éducation équitable et renforcer la confiance du public dans les systèmes éducatifs.",
+    Presentation: "<a href='https://docs.google.com/presentation/d/1L_8gEkn1CN9oOppTCjMnbYpu9OE-DHWd/edit?usp=drive_link&ouid=110822608714023070842&rtpof=true&sd=true' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Bamalembuko A. Pascal",
+    Titles: "Doctorant",
+    Institutions: "Institut Supérieur Pédagogique de Bukavu",
+    Country: "",
+    Topic: "Validation d’un environnement informatique interactif « AKBAL » d’aide à la révision-apprentissage à l’école maternelle",
+    Abstract: "Cette étude aborde les disparités dans l'éducation de la petite enfance en République démocratique du Congo (RDC), en mettant l'accent sur la création d'un environnement de révision et d'apprentissage dédié aux écoles maternelles. Avec des variations significatives dans les ressources et les pratiques pédagogiques entre les écoles urbaines et rurales, l'étude visait à développer des outils numériques alignés sur les programmes nationaux (PNEM-INFO-2013 et PNEM-2021) pour favoriser un accès équitable à une éducation de qualité. En utilisant des méthodes informatiques incrémentales et la modélisation UML, un prototype de système numérique a été créé et testé avec 149 enfants de 12 écoles maternelles. Les résultats ont montré une efficacité modérée dans la perception de l'utilité, de la facilité d'utilisation et de la motivation, avec un score d'adaptation de la facilité d'utilisation de 74,2 %. Le système a démontré le potentiel d'intégration des TIC dans l'éducation, en particulier lors de crises telles que COVID-19 ou de déplacements dus à des conflits. Les recommandations politiques comprennent l'adoption de systèmes d'apprentissage numérique résilients et inclusifs, inspirés de modèles tels que le « passeport d'apprentissage » du Nigeria, afin de garantir un accès uniforme aux ressources éducatives dans des contextes divers, en comblant les disparités entre les zones urbaines et rurales.",
+    Presentation: "<a href='https://drive.google.com/file/d/1i_fFS-jP_2IorxXJoMbRAJ_5xlcIu5zP/view?usp=drive_link' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Bergmann Jessica",
+    Titles: "Education Researcher",
+    Institutions: "UNICEF Office of Research-Innocenti",
+    Country: "",
+    Topic: "Leading for Success: Best Practices and Gender Equity in School Leadership",
+    Abstract: "",
+    Presentation: "<a href='https://drive.google.com/file/d/1wgHGr7TWTdfyuKUEDMLUu2kNi0uhTSAt/view?usp=drive_link' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Bossa Epse Hounguevou A.B. Reine",
+    Titles: "Director of the NGO Apretectra",
+    Institutions: "APRETECTRA",
+    Country: "Bénin",
+    Topic: "Promouvoir l'égalité de genre dans la formation professionnelle pour un accès équitable : Conclusions d'un audit genre des 10 lycées agricoles du Bénin",
+    Abstract: "L’étude de Bossa examine les inégalités de genre dans les Lycées Techniques Agricoles (LTA) du Bénin, mettant en évidence des disparités significatives malgré les efforts en cours pour promouvoir l'équité. En 2023, les filles ne représentaient que 19,7 % de l’effectif total, avec un accès limité aux domaines traditionnellement dominés par les hommes et aux postes de direction. Les femmes sont également sous-représentées parmi le personnel enseignant (16 %) et les cadres de gestion (2 %). À l’aide d’une approche méthodologique mixte, l’étude a mené des audits dans 10 LTA répartis sur neuf régions, interrogeant 482 étudiants, 124 enseignants et 48 administrateurs. Malgré des initiatives telles que des quotas de genre, des programmes de sensibilisation et la désagrégation des données, des barrières structurelles et culturelles persistent. Les recommandations incluent la mise en place d’un quota minimum de 30 % pour l’inscription des filles, la création de bourses pour les filles dans les filières non traditionnelles, l’intégration de programmes pédagogiques sensibles au genre, et l’amélioration de la planification et du budget en tenant compte du genre. Il est également essentiel d’améliorer les infrastructures, telles que la mise en place de structures séparées pour les filles. Ces actions visent à créer un environnement éducatif inclusif, en abordant les disparités structurelles de genre dans l’enseignement technique et professionnel au Bénin.",
+    Presentation: "<a href='https://drive.google.com/file/d/1cYGPIY-wiq1FUfJag6Iiak4seRz8CzBf/view?usp=drive_link' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Bulumu Angella",
+    Titles: "",
+    Institutions: "Cohere",
+    Country: "Uganda",
+    Topic: "Building Resilient Systems for Refugee Children with Disabilities: A Ugandan Case Study on Inclusive Education",
+    Abstract: "This case study examines the construction of resilient systems for refugee children with disabilities in Uganda through community-based approaches to inclusive care and education. Targeting 1,200 refugee children with conditions such as autism, cerebral palsy, and epilepsy, the program engaged caregivers, teachers, and community leaders to address barriers to education access, caregiver capacity, and stigma. A mixed-methods evaluation revealed significant improvements in caregiver confidence and children’s quality of life, with a 60% enhancement in their ability to learn at home and in school. Enrollment rates increased, though variations were influenced by region, gender, and disability type, with epilepsy being a key factor in school access. Key lessons highlight the importance of culturally sensitive, community-led interventions and holistic strategies. Recommendations include strengthening community engagement, integrating cultural practices, providing specialized teacher training, and partnering with health services.",
+    Presentation: "<a href='https://drive.google.com/file/d/1_fRS4LqoCFxDw0CvlftCu475wDlz3X0X/view?usp=drive_link' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Casely-Hayford Leslie",
+    Titles: "Director",
+    Institutions: "Associates for Change",
+    Country: "Ghana",
+    Topic: "The Cost Effectiveness of Accelerated Education Programs in Ghana",
+    Abstract: "This article examines the impact and effectiveness of Accelerated Education Programs (AEPs) in West Africa, particularly in Ghana, Nigeria, and Sierra Leone. These programs, supported by models such as \"accelerated schools\" and complementary basic education, offer solutions to reduce the high number of out-of-school children, estimated at 98 million in sub-Saharan Africa. AEPs enable a swift transition for out-of-school children into the formal education system, with success rates exceeding 80% for access to upper primary education. The results also highlight a positive impact on girls by helping delay early marriages and promoting self-sufficiency. However, the sustainability of these programs remains limited by insufficient funding, which relies heavily on donor support. The study recommends increased public investment to achieve universal education goals within 10 years, in line with the Sustainable Development Goals (SDGs).",
+    Presentation: "<a href='https://drive.google.com/file/d/1tnZSC8slmj6EftXzJ_YsdPVmMVJBaiHn/view?usp=drive_link' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Charron Richard",
+    Titles: "Professeur associé",
+    Institutions: "EduGestion",
+    Country: "Canada",
+    Topic: "Qualité de la gestion : condition essentielle à la construction de systèmes résilients, inclusifs, de qualité et pertinents en Afrique",
+    Abstract: "Richard Charron met en avant le rôle crucial d'une gestion efficace dans la construction de systèmes éducatifs résilients, inclusifs et de haute qualité en Afrique. En s'appuyant sur les conclusions des stratégies de la CONFEMEN et des analyses systémiques plus larges, l'étude identifie un écart significatif dans la professionnalisation des responsables éducatifs au niveau des écoles et des districts. Les pratiques actuelles manquent souvent de formation formelle, s'appuient sur l'ancienneté ou les connexions politiques pour les nominations, et ne priorisent pas l'expertise en gestion. La solution proposée préconise des réformes systémiques, notamment la création d'une profession formelle pour les leaders éducatifs. Cela implique l'adoption d'un modèle de formation 70-20-10, où 70 % de l'apprentissage provient de la pratique réflexive, 20 % des interactions sociales, et 10 % de la formation formelle. Les recommandations incluent l'utilisation des réseaux existants, comme les anciens élèves de l'Université Senghor, et des partenariats internationaux pour renforcer le développement des capacités et intégrer des approches de gestion hybrides. L'initiative souligne la nécessité de stratégies cohérentes pour aligner le développement du leadership avec les objectifs nationaux de l'éducation, afin d'améliorer les résultats d'apprentissage fondamentaux dans toute la région.",
+    Presentation: "<a href='https://drive.google.com/file/d/1RkWYw-TZoDpqzlrzeDGz0yxKtI9C5jL1/view?usp=drive_link' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Chickering Miriam",
+    Titles: "CEO & Founder",
+    Institutions: "NextGenU & NursesInternational.org",
+    Country: "Canada",
+    Topic: "Open Educational Resources and Equity in STEM Education: the STEPS Initiative",
+    Abstract: "Chickering's presentation highlights the STEM Teacher/Student Education for Primary Schools (STEPS) initiative, a collaboration between NextGenU.org and its partners in Benin, Cameroon, and the Democratic Republic of the Congo. The project addresses educational inequalities in STEM by developing localized, culturally relevant Open Educational Resources (OER) aligned with national curricula. Using curriculum comparisons and AI tools, the initiative adapted 100% of existing materials and created 50% new content to meet specific needs. This effort has enhanced STEM education for over 6,000 students, with teachers reporting greater confidence and effectiveness. AI integration reduced content development costs by 70% and boosted production efficiency by 158%. Localized examples and illustrations increased student engagement and improved learning outcomes. The STEPS initiative demonstrates how OER can democratize STEM education, particularly in low- and middle-income countries. Policymakers are encouraged to invest in localized OER and promote international collaboration to bridge educational gaps and advance global STEM teaching.",
+    Presentation: "<a href='https://docs.google.com/presentation/d/19OEAWP4PMvokZY76Iy4CHuBSmmjXhShE/edit?usp=drive_link&ouid=110822608714023070842&rtpof=true&sd=true' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Coulibaly Yasnoga Félicité Épouse Barro",
+    Titles: "Head of Department of Human and Social Sciences",
+    Institutions: "École Normale Supérieure du Burkina Faso",
+    Country: "Burkina Faso",
+    Topic: "Réinventer l’éducation dans l’adversité : la résilience des communautés locale au Burkina Faso face au défi sécuritaire",
+    Abstract: "Cette étude examine la résilience des communautés locales de la région de Fada N’Gourma au Burkina Faso face à la crise sécuritaire qui affecte l'accès à l'éducation. Depuis 2016, l’insécurité a conduit à la fermeture de 48 écoles primaires publiques sur 97, et à la réinstallation de 46,61 % des élèves dans la région. L'incapacité de l'État à résoudre pleinement ces défis a poussé les communautés locales à s'organiser pour maintenir l'accès à l'éducation. À travers une approche qualitative, la recherche met en lumière les contributions endogènes de la communauté, notamment la construction de 16 salles de classe, l'embauche de huit enseignants temporaires, et la location de locaux supplémentaires avec un budget de 186 465 166 FCFA. Ces efforts témoignent de l'ingéniosité locale pour préserver l'éducation. Les recommandations soulignent la nécessité d’un soutien accru de l’État et des partenaires internationaux pour assurer la pérennité de ces initiatives. Investir dans des infrastructures éducatives alternatives et renforcer les capacités locales est crucial pour surmonter les menaces à l’éducation liées à l’insécurité.",
+    Presentation: "<a href='https://docs.google.com/presentation/d/1jC7J7xsW0pbgK1GaVmd7A4Hf4o7QoYTa/edit?usp=drive_link&ouid=110822608714023070842&rtpof=true&sd=true' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Da Mota Viegas Dias Wilder",
+    Titles: "Director of the Cabinet",
+    Institutions: "Ministry of Education, Culture and Science",
+    Country: "São Tomé and Príncipe",
+    Topic: "Educação Inclusiva em São Tomé e Príncipe",
+    Abstract: "Wilder da Mota Viegas Dias’s presentation highlights the challenges and progress of the inclusive education system in São Tomé and Príncipe under the 2019-2023 Political Charter for Education (CPE). The country is striving to promote quality, equitable, and inclusive education while reducing educational disparities, particularly for children with special educational needs (SEN). The project includes innovations such as the development of digital teaching materials, teacher training, and institutional capacity-building. However, despite these efforts, quality remains a major concern. Recommendations include securing funding for resource acquisition, establishing a learning support center, and promoting structured school environments. This initiative is part of an international cooperation effort to enhance school inclusion and strengthen human capital for sustainable socio-economic development.",
+    Presentation: "<a href='https://drive.google.com/file/d/1SEl_z6mDs_c75abPGZ56r7eMuQk0KOQ9/view?usp=drive_link' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Dela Sorsy",
+    Titles: "LAMPES researcher",
+    Institutions: "Université de Lomé",
+    Country: "Togo",
+    Topic: "Réforme des programmes éducatifs dans les pays francophones d’Afrique : Vers une décolonisation et une inclusion culturelle et linguistique",
+    Abstract: "La présentation de Sorsy examine la nécessité de décoloniser et d'adapter culturellement les systèmes éducatifs en Afrique francophone en intégrant les langues et les cultures locales dans les programmes scolaires. Les systèmes éducatifs actuels, façonnés par les héritages coloniaux, reposent largement sur la langue française et des modèles étrangers, marginalisant ainsi les langues africaines et échouant à se connecter avec les réalités locales. Ce décalage contribue à un faible engagement des élèves, notamment dans les zones rurales, et entrave l'inclusivité éducative. L'étude met en lumière des réformes réussies, telles que le Plan Sénégal Émergent et les initiatives bilingues du Burkina Faso, qui démontrent l'impact positif de l'enseignement dans les langues locales sur les performances académiques, l'estime de soi et l'identité culturelle. Cependant, des défis persistent, notamment la résistance au changement, les contraintes logistiques et le financement insuffisant des programmes bilingues. Les recommandations incluent le renforcement des politiques bilingues, l'investissement dans la formation des enseignants et la production de supports pédagogiques dans les langues locales.",
+    Presentation: "<a href='https://drive.google.com/file/d/1MWguqhx1FjfrN_xnuronFfwho3Q3yLPf/view?usp=drive_link' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Ebersohn Liesel",
+    Titles: "Director",
+    Institutions: "Centre for the Study of Resilience",
+    Country: "South Africa",
+    Topic: "An Education Research Framework for Global South",
+    Abstract: "Ebersöhn’s presentation introduces the TAPESTRe framework, a model designed to address global educational disparities through equitable research in emerging economies. The framework emphasizes transformative, participatory, and culturally sensitive approaches to produce high-quality, context-specific research that informs sustainable education policies. Ebersöhn highlights the imbalanced global knowledge base, dominated by Global North perspectives, which often fail to capture the diverse socio-cultural and economic variables influencing education in underrepresented regions. TAPESTRe seeks to counter this imbalance by promoting resilience, agency, and justice in educational research while ensuring rigorous and impactful methodologies. Key challenges include the limited representation of emerging economies in global education data and the need for additional indicators to comprehensively assess education quality and equity. The presentation calls for collaborative, inclusive, and locally grounded research to generate actionable knowledge that supports equitable education reform, aligns with global sustainability goals, and fosters resilience in marginalized communities.",
+    Presentation: "<a href='https://drive.google.com/file/d/14hxFZeSX1vXGsN5AvJyBgoABgNQwLnTt/view?usp=drive_link' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Essah Pauline",
+    Titles: "Director of Research",
+    Institutions: "Education Sub-Saharan Africa",
+    Country: "United Kingdom",
+    Topic: "Increasing the visibility and impact of education data and evidence generated by African researchers in Africa",
+    Abstract: "Essah’s presentation highlights the importance of amplifying data and research on education generated by African researchers to address the continent’s learning crisis. Despite the availability of research, data produced by Africans often lacks visibility and integration into decision-making processes. This gap hinders the development of evidence-based policies and practices in education. The African Education Research Database (AERD), which contains over 6,500 publications, was co-created to enhance the visibility of African education researchers and their findings. This initiative fosters collaboration, identifies research gaps, and supports capacity-building for African researchers. It also promotes South-South knowledge sharing across linguistic divides and encourages international funders to support African-led research. Key recommendations include investing in local journals, data systems, and infrastructure, as well as bridging gaps between researchers, policymakers, and practitioners. By making data accessible and actionable, the initiative aims to enable contextually informed, evidence-based decisions to improve access, quality, and equity in African education systems—advancing sustainable development.",
+    Presentation: "<a href='https://drive.google.com/file/d/1TE5SgNpH5K65JIUYWIGwg0jIAr1x0-53/view?usp=drive_link' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Evans Owino George",
+    Titles: "Programme Manager",
+    Institutions: "African Early Childhood Network",
+    Country: "Kenya",
+    Topic: "Early Learning in GPE Partner Countries Knowledge Synthesis",
+    Abstract: "This document synthesizes the results of early learning initiatives funded by the Global Partnership for Education (GPE) under the Knowledge and Innovation Exchange (KIX) program. Covering 19 low- and middle-income countries, the projects aim to strengthen early childhood education (ECE) systems to address persistent challenges such as low enrollment rates—only 42% of children in Africa have access to pre-primary education—and severe learning poverty, with 70% of 10-year-olds unable to read a basic text. The analysis identifies key strategies, including integrating play-based learning approaches, improving teacher training, promoting gender equality, fostering social inclusion, and scaling sustainable ECE models. Community engagement emerged as a critical factor in improving outcomes. Recommendations emphasize the need to address gaps in inclusion, expand educator training, and generate actionable data through research. The findings highlight the importance of evidence-based, context-adapted interventions to enhance access, quality, and equity in ECE, thereby contributing to long-term improvements in education systems across the Global South.",
+    Presentation: "<a href='https://drive.google.com/file/d/1prD6Fcke_yZp0E7YvpWcCm3eHHQOrGSJ/view?usp=drive_link' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Faitchou Marius F.",
+    Titles: "Doctorant",
+    Institutions: "Université de N'Djaména",
+    Country: "Tchad",
+    Topic: "Utiliser l'Intelligence Artificielle pour améliorer le système éducatif Africain en mettant l'accent sur les enseignants et les apprenants",
+    Abstract: "La présentation de Faitchou explore le potentiel transformateur de l'intelligence artificielle (IA) pour relever les défis éducatifs en Afrique, en mettant l'accent sur les enseignants et les apprenants. Avec plus de 20 % des enfants âgés de 6 à 11 ans et 33 % de ceux âgés de 12 à 14 ans étant exclus du système scolaire en Afrique subsaharienne, l'IA offre des solutions innovantes pour améliorer l'accès, l'équité et la qualité de l'éducation, en alignement avec l'Objectif de Développement Durable 4. L'étude met en lumière la capacité de l'IA à personnaliser l'apprentissage, à fournir un soutien linguistique, à améliorer l'éducation à distance et à réduire les disparités. Les impacts clés incluent l'autonomisation des enseignants grâce à des outils avancés, la promotion de pédagogies centrées sur l'apprenant, et l'élargissement de l'accès aux communautés marginalisées. Les recommandations soulignent l'importance de l'investissement dans les infrastructures technologiques, des collaborations public-privé et des régulations encadrant l'utilisation éthique de l'IA dans l'éducation. La formation des professionnels aux technologies de l'IA est également cruciale pour assurer une mise en œuvre durable. En intégrant l'IA dans les systèmes éducatifs, l'Afrique pourra combler les lacunes d'accès et d'équité, créant ainsi des opportunités pour l'apprentissage tout au long de la vie et favorisant une éducation inclusive et de qualité pour tous les apprenants.",
+    Presentation: "<a href='https://docs.google.com/presentation/d/1mDM2VPWRPkLHfNmE1AOM3XEr7wstfqIu/edit?usp=drive_link&ouid=110822608714023070842&rtpof=true&sd=true' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Fall Mariama Mary",
+    Titles: "Associate Education Officer",
+    Institutions: "UNHCR",
+    Country: "Sénégal",
+    Topic: "Un plaidoyer pour intégrer l’éducation financière dans les curricula nationaux afin d’arriver à des comportements et choix financiers avertis chez les jeunes adultes",
+    Abstract: "Dans son article, Mariama Mary Fall souligne l'impérieuse nécessité d'intégrer l'éducation financière dans les programmes scolaires nationaux pour autonomiser les jeunes populations déplacées en Afrique de l'Ouest. En s'appuyant sur les cadres de l'OCDE et de la BCEAO, l'étude met en lumière les lacunes généralisées en matière de littératie financière à travers les âges, les genres et les niveaux intellectuels, aggravées par des normes culturelles et religieuses. Ces déficiences conduisent à des comportements de gestion financière inefficaces et à une autonomie financière limitée. L'intervention propose d'intégrer l'éducation financière dans les écoles par le biais de diverses modalités, telles que des cours autonomes, des activités parascolaires et des supports pédagogiques intégrés. Cette approche vise à développer des compétences financières essentielles et à favoriser une prise de décision éclairée. Les principales recommandations incluent la priorité donnée à la formation des enseignants, le développement de supports pédagogiques culturellement sensibles et l'alignement des politiques pour pérenniser l'initiative. L'éducation financière est présentée comme une compétence vitale pour réussir dans l'ère numérique.",
+    Presentation: "<a href='https://drive.google.com/file/d/1PIB0zdZoJdy9e7VUFRm3pEVVuu9s-F4H/view?usp=drive_link' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Gaillat Thierry",
+    Titles: "Associate Professor",
+    Institutions: "Université de la Réunion",
+    Country: "France",
+    Topic: "Développement de la formation continue des enseignants : Élaboration d’une approche heuristique contextualisée à partir du projet PERFORM",
+    Abstract: "La présentation de Gaillat propose une approche innovante de la formation continue des enseignants à Madagascar, répondant à des défis tels que les faibles taux de qualification, l’accès limité au développement professionnel et les disparités en milieu rural. L’étude, basée sur le projet PERFORM, a développé un modèle hybride de formation certifiée adapté au contexte local, visant à renforcer les compétences des enseignants et à améliorer la qualité de l’éducation dans le pays. Les résultats clés comprennent la création de neuf formations pour enseignants et de quatre formations pour formateurs, engageant plus de 600 éducateurs dans quatre régions. Le projet a favorisé la collaboration entre institutions, ministères et écoles normales (ENS/ENSET), en mettant l’accent sur la co-construction des modules de formation et des méthodes pratiques. Les impacts observés incluent une amélioration des pratiques pédagogiques, une collaboration accrue entre les institutions de formation et des expériences d’apprentissage enrichissantes pour les étudiants. Les recommandations suggèrent d’intégrer cette approche dans les systèmes éducatifs afin de construire des cadres de développement professionnel durables, inclusifs et sensibles au contexte.",
+    Presentation: "<a href='https://drive.google.com/file/d/11JXQDKgsSZ5h3fnl22qDNMBpZ5em_ksH/view?usp=sharing' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Gninneyo Sylvestre Pierre Niya",
+    Titles: "Associate Professor",
+    Institutions: "Ecole Normale Supérieure",
+    Country: "Burkina Faso",
+    Topic: "Formation des enseignants et inclusion des élèves déficients visuels : Analyse des pratiques à Dédougou",
+    Abstract: "L'étude de Niya examine les défis rencontrés par les étudiants malvoyants (ESHV) dans les écoles inclusives au Burkina Faso, en se concentrant sur le rôle des pratiques d'évaluation dans la perpétuation des inégalités éducatives. Malgré les engagements nationaux et internationaux en faveur de l'éducation inclusive, tels que la Déclaration de Salamanque et l'ODD4, les ESHV obtiennent des résultats inférieurs à ceux de leurs pairs sans handicap. La recherche, menée dans 23 écoles à travers des entretiens, des enquêtes et des analyses de données comparatives, attribue ces disparités à des méthodes d'évaluation inéquitables et non adaptatives. Les pratiques actuelles d'évaluation ne tiennent pas compte des besoins spécifiques des étudiants malvoyants, ce qui conduit à de mauvais résultats académiques et à des taux de progression limités. Parmi les recommandations figurent l'intégration d'une formation spécialisée sur l'enseignement inclusif des personnes en situation de handicap dans les programmes de formation des enseignants, le développement de cadres d'évaluation équitables adaptés aux différents types de handicap, et la mise en œuvre de politiques ciblées pour combler les lacunes de l'éducation inclusive.",
+    Presentation: "<a href='https://drive.google.com/file/d/1Pla7TYDCy152XJFfCexidnKxWm3isbPZ/view?usp=drive_link' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Gninneyo Sylvestre Pierre Niya",
+    Titles: "Assistant Professor",
+    Institutions: "Ecole Normale Supérieure",
+    Country: "Burkina Faso",
+    Topic: "Formation des enseignants et inclusion des élèves déficients visuels : Analyse des pratiques à Dédougou",
+    Abstract: "L'étude de Niya examine les défis rencontrés par les étudiants malvoyants (ESHV) dans les écoles inclusives au Burkina Faso, en se concentrant sur le rôle des pratiques d'évaluation dans la perpétuation des inégalités éducatives. Malgré les engagements nationaux et internationaux en faveur de l'éducation inclusive, tels que la Déclaration de Salamanque et l'ODD4, les ESHV obtiennent des résultats inférieurs à ceux de leurs pairs sans handicap. La recherche, menée dans 23 écoles à travers des entretiens, des enquêtes et des analyses de données comparatives, attribue ces disparités à des méthodes d'évaluation inéquitables et non adaptatives. Les pratiques actuelles d'évaluation ne tiennent pas compte des besoins spécifiques des étudiants malvoyants, ce qui conduit à de mauvais résultats académiques et à des taux de progression limités. Parmi les recommandations figurent l'intégration d'une formation spécialisée sur l'enseignement inclusif des personnes en situation de handicap dans les programmes de formation des enseignants, le développement de cadres d'évaluation équitables adaptés aux différents types de handicap, et la mise en œuvre de politiques ciblées pour combler les lacunes de l'éducation inclusive.",
+    Presentation: "<a href='https://docs.google.com/presentation/d/12NY8R3NU_DWLpMNqOp-L7Ta6-ymn0Btf/edit?usp=drive_link&ouid=110822608714023070842&rtpof=true&sd=true' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Goretti Nakabugo Mary",
+    Titles: "Executive Director",
+    Institutions: "UWEZO Uganda",
+    Country: "Uganda",
+    Topic: "Collaborating and Innovating Contextualised Tools for Assessing Life Skills & Values: Insights from the Action for Life Skills and Values in East Africa",
+    Abstract: "Nakabugo’s presentation highlights the ALiVE (Assessing Life Skills and Values for East Africa) approach, a collaborative initiative aimed at measuring and promoting life skills and values among adolescents in East Africa. Developed by Uwezo Uganda, the Zizi Afrique Foundation, the Milele Zanzibar Foundation, and the Luigi Giussani Foundation, ALiVE addresses gaps in assessing non-academic skills essential for holistic education. The initiative uses contextualized tools to evaluate socio-emotional learning (SEL) competencies, such as critical thinking, problem-solving, and teamwork. Implementation in countries like Kenya, Uganda, and Zanzibar has revealed varying skill levels, with some adolescents demonstrating strong potential, underscoring the need for targeted interventions. Key recommendations include integrating SEL into school curricula, improving teacher training, and strengthening capacity at the education system level. The project also calls for Sub-Saharan Africa to amplify its voice in global education discussions and position itself as a thought leader in SEL innovation.",
+    Presentation: "<a href='https://drive.google.com/file/d/1pHMcwYDryEQ2phGD6AqMc6TOiOloz1u2/view?usp=drive_link' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Hakizimana Prosper",
+    Titles: "Graphic Design Specialist",
+    Institutions: "Ministry of Education",
+    Country: "Rwanda",
+    Topic: "The Impact of Assistive Devices on Inclusive Education in Rwanda",
+    Abstract: "",
+    Presentation: "<a href='https://drive.google.com/file/d/1GBw0B2cs9dI-tsw5eNVwteOdU34AHp0u/view?usp=drive_link' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Hawa Mohamed",
+    Titles: "Researcher and senior lecturer",
+    Institutions: "University of Woldia",
+    Country: "Ethiopia",
+    Topic: "Teachers’ Awareness of Scaffolding Reading Comprehension, Classroom Practice and Academic Self-Concept: Evidence from Secondary School EFL Teachers",
+    Abstract: "Hawa Mohamed focuses on the role of scaffolding (educational support) in improving reading comprehension among secondary school students learning English as a foreign language (EFL). The research highlights the impact of teachers' awareness of scaffolding strategies and their academic self-concept on their classroom practices. Although teachers demonstrate strong theoretical awareness of scaffolding (M=29.43, p<0.001) and maintain a positive self-concept, gaps persist in their practical application, particularly during the post-reading phase (M=14.38, p<0.001). Using a combination of reflective practices, training, and teacher incentives, the study emphasizes the importance of aligning theoretical knowledge with practical skills. The results show a strong correlation between awareness and classroom practices (r=0.59, p=0.00) but weak links between academic self-concept and practice. Recommendations include targeted professional development, ongoing support, and addressing barriers such as time and resource constraints.",
+    Presentation: "<a href='https://docs.google.com/presentation/d/1E1J8uOroHNp-6fiItzXN_WWkyoeGyMDr/edit?usp=drive_link&ouid=110822608714023070842&rtpof=true&sd=true' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Inyega Hellen",
+    Titles: "Professor",
+    Institutions: "University of Nairobi",
+    Country: "Kenya",
+    Topic: "From Insight to Impact: Revolutionizing Teacher Development in Kenya",
+    Abstract: "Inyega's presentation focuses on revolutionizing teacher development in Kenya through the Secondary Education Quality Improvement Project (SEQIP). This comprehensive initiative strengthens institutional capacity, promotes data-driven decision-making, and integrates innovative approaches such as indigenous language curriculum development and structured pedagogy. SEQIP emphasizes teacher preparation through micro-teaching, internships, and mentorship, alongside continuous professional development (CPD) programs like team teaching, lesson studies, and action research. The project also addresses systemic challenges by improving infrastructure, optimizing teacher placement, and integrating socio-emotional learning support. Key outcomes include enhanced collaboration between the Ministry of Education and stakeholders such as CEMASTEA and KICD, driving reforms in competency-based curricula and education for learners with disabilities. Recommendations highlight the need for sector-wide reforms to cultivate 21st-century teachers equipped with inclusive, data-informed pedagogical skills. SEQIP demonstrates the potential for sustainable, transformative teacher development, creating a robust and supportive teacher ecosystem in Kenya.",
+    Presentation: "<a href='https://drive.google.com/file/d/1q4O2BybtDt3_mmso8XYNzNmfTb-l0fsf/view?usp=drive_link' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Johnson Hinneh",
+    Titles: "Experienced educator",
+    Institutions: "Ministry of Education",
+    Country: "Liberia",
+    Topic: "Teacher Agency in Curriculum reform: Examining the dynamics of teacher cognition, classroom practices and impact on students’ learning outcomes in Liberia",
+    Abstract: "This study examines teacher agency in curriculum reform in Liberia, focusing on the relationship between teacher cognition, classroom practices, and student learning outcomes. The Liberian education sector faces significant systemic challenges, including gaps in teacher preparation and curriculum implementation. Findings indicate that 75% of teachers are unprepared for effective curriculum delivery, and 60% struggle to understand and apply the curriculum. The research, conducted with 175 teachers and 350 students from 35 schools, used a mixed-methods approach, collecting data through questionnaires, interviews, and observations. Analysis revealed that teacher cognition is influenced by both personal and contextual factors, yet its impact on classroom practices and student outcomes remains minimal. Recommendations include strengthening teacher training programs, enhancing collaboration between policymakers and schools, and leveraging data to address curriculum gaps.",
+    Presentation: "<a href='https://docs.google.com/presentation/d/1GHsOo7KmXuHdLUWIxn61ME3t0dMq-b05/edit?usp=drive_link&ouid=110822608714023070842&rtpof=true&sd=true' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Kanobe Fredrick",
+    Titles: "Lecturer and HoD in computer science",
+    Institutions: "Kyambogo University",
+    Country: "Uganda",
+    Topic: "Uncovering Challenges of Educational Technology in Public Higher Institutions of Learning in Uganda: A case study of Academic Management Information System (ACMIS)",
+    Abstract: "This study examines the challenges associated with the adoption of educational technologies in public higher education institutions in Uganda, focusing on the Academic Management Information System (ACMIS) at Kyambogo University. Despite its potential to enhance academic operations, the system faces significant difficulties, including a lack of stakeholder involvement during its design, cultural resistance to change, insufficient user training, data redundancy, inadequate system documentation, and a lack of leadership support. These issues have led to operational failures such as missing graduate records, poor timetable management, and reputational risks for the institution. The study employed a qualitative approach, using semi-structured interviews and thematic analysis to gather insights from faculty, students, IT staff, and administrators. Recommendations include engaging stakeholders at all levels, implementing change management strategies, providing user training, and establishing a dedicated IT support team. Medium-term solutions focus on data recovery programs and regular system evaluations.",
+    Presentation: "<a href='https://docs.google.com/presentation/d/1lG1nYXuc2nAwtYcOiCha-0IqElnHSut8/edit?usp=drive_link&ouid=110822608714023070842&rtpof=true&sd=true' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Kasirye Elizabeth Kisakye",
+    Titles: "Early Childhood Development specialist",
+    Institutions: "Ministry of Education",
+    Country: "Uganda",
+    Topic: "Early Childhood Development Community Child Care Program. Uganda Case",
+    Abstract: "This presentation highlights Uganda’s Early Childhood Development (ECD CCCP) program, a comprehensive initiative designed to strengthen early childhood education (ECE) through low-cost, community-driven approaches. Implemented between 2015 and 2025, the program aims to address gaps in ECE teacher training and enhance collaboration among stakeholders, including faith-based organizations, local governments, and families. It employs a modular, blended in-service training model for caregivers, emphasizing hands-on, field-based learning. Key features include community mobilization, systematic coaching, and mentorship. Graduates receive certification from the Ministry of Education and Sports, ensuring alignment with national priorities and policies. Results demonstrate improved quality assurance mechanisms, skill development in low-resource settings, and adaptability to both public and private ECE programs. The program showcases sustainability by building resilient community systems. Recommendations include expanding structured, competency-based training models to ensure equitable and inclusive education, in line with SDG 4’s goal of quality education for all.",
+    Presentation: "<a href='https://drive.google.com/file/d/1GGRYywirxf7KdvD7MTtIxbkFCFF00-SD/view?usp=drive_link' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Kemba Ranavela",
+    Titles: "Directric",
+    Institutions: "École privée Les Colibris",
+    Country: "Madagascar",
+    Topic: "Articuler le commun et le singulier - Retour d’expérience de l'inclusion à l’école - Les Colibris 2015-2024",
+    Abstract: "Kemba Ranavela présente le parcours de l’inclusion à l’école Les Colibris, une école primaire bilingue malgache-française à Antananarivo, Madagascar, de 2015 à 2024. L'école accueille 280 élèves, intégrant des enfants avec des besoins éducatifs spéciaux (par exemple, troubles DYS, TDAH, autisme) dans des classes régulières avec l'appui d'assistants scolaires partagés ou individuels. Les méthodologies clés incluent la formation multidisciplinaire des enseignants en psychologie de l'enfant, la compréhension des troubles de l'apprentissage et la mise en œuvre de programmes d’éducation socio-émotionnelle comme Think Equal, le yoga et le sport. L'école adopte également une pédagogie différenciée inspirée de Freinet, des classes ouvertes et une cour polyvalente pour favoriser la collaboration et l'apprentissage social. Les résultats montrent un meilleur engagement des enseignants, une plus grande autonomie des élèves et une confiance mutuelle entre enseignants et apprenants. Les recommandations soulignent la nécessité de redéfinir les normes, de soutenir les enseignants dans le processus de changement et de promouvoir un apprentissage individualisé pour garantir l'inclusion et le droit à l'unicité de chaque élève.",
+    Presentation: "<a href='https://docs.google.com/presentation/d/1Qrxgs4U0ClytPKpc_RASXUIx50-bOuuh/edit?usp=drive_link&ouid=110822608714023070842&rtpof=true&sd=true' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Kennedy Monari",
+    Titles: "Education in emergencies specialist",
+    Institutions: "PEER Network",
+    Country: "Kenya",
+    Topic: "Refugee Educational Outcomes: An Assessment of Policy Maker’s Perceptions on Uganda’s Progressive Education Approach to Conflict-Affected Children",
+    Abstract: "This presentation evaluates Uganda's progressive educational approach for refugee children affected by conflict, highlighting its inclusive nature and alignment with global best practices. Uganda's education policies for refugees emphasize integration into national systems, free primary education, and equitable access to resources, serving as a model for other countries facing displacement crises. The study assessed policymakers' perceptions and identified strengths, such as inclusivity in primary education and frameworks promoting equity. However, challenges persist in refugee secondary education, including inadequate infrastructure, teacher shortages, and limited funding, hindering the effective achievement of Uganda's inclusive education goals. Recommendations include increasing investments in secondary education, addressing resource gaps, and enhancing teacher training to meet the specific needs of refugee students.",
+    Presentation: "<a href='https://drive.google.com/file/d/19nUD5KelMdeIYbbcr0vrr92gSpC9FX6L/view?usp=drive_link' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Khadidiatou Sow",
+    Titles: "Vice-Chairwoman",
+    Institutions: "FAWE, Sénégal",
+    Country: "Sénégal",
+    Topic: "Situation de référence de la participation des filles du Moyen Secondaire dans les filières STEM: Cas de l’IA de Pikine Guédiawaye",
+    Abstract: "Cette étude examine la sous-représentation des filles dans les filières STEM au Sénégal, en se concentrant sur Pikine Guédiawaye. Malgré les initiatives telles que les concours STEM et les directives présidentielles, un écart de genre important persiste dans l’éducation scientifique. Les données mondiales révèlent que seulement 28 % des chercheurs sont des femmes (UNESCO, 2017), reflétant des défis similaires en Afrique, où une moitié de la population demeure une ressource inexploitée dans les secteurs STEM. L’étude a utilisé une approche mixte, interrogeant 482 participants, incluant élèves, enseignants et responsables éducatifs. Les résultats montrent que des barrières culturelles, institutionnelles et psychologiques freinent l'inscription et la réussite des filles dans les STEM. Les filles sont souvent orientées vers les filières littéraires, et les infrastructures inadéquates, comme des laboratoires mal équipés, aggravent cette situation. Les recommandations incluent l'intégration d'une pédagogie sensible au genre, l’amélioration des infrastructures STEM, la promotion de mentorats par des modèles féminins, et la lutte contre le mariage précoce et les attitudes parentales.",
+    Presentation: "<a href='https://docs.google.com/presentation/d/13xtvWus3IC3Zt6woJ3aANahdBozY0oAM/edit?usp=drive_link&ouid=110822608714023070842&rtpof=true&sd=true' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Kossi Agbogan",
+    Titles: "Directeur de Programmes",
+    Institutions: "DPIP-Togo",
+    Country: "Togo",
+    Topic: "Teacher Continuous Professional Development Online in Togo with OER",
+    Abstract: "L'étude de Kossi Agbogan explore l'utilisation des Ressources Éducatives Ouvertes (REO) pour améliorer le développement professionnel continu des enseignants au Togo. Passant de la formation en présentiel à la formation en ligne, le programme a adapté des ressources libres provenant de TESSA (Teacher Education in Sub-Saharan Africa) et a mis en place une plate-forme numérique grâce à un partenariat avec l'Open University du Royaume-Uni. Cette approche répond à la demande croissante de formation des enseignants dans un contexte de forte augmentation des inscriptions scolaires. Le programme a accueilli 26 participants, en leur offrant un soutien personnalisé et des matériaux téléchargeables. Bien que 65 % des participants aient obtenu des certificats avec succès, des défis ont été rencontrés, notamment des difficultés d'inscription et une faible expérience préalable de l'apprentissage en ligne. Des disparités de genre ont également été observées, avec seulement 15 % de participantes féminines. Parmi les recommandations figurent la promotion des REO pour réduire les coûts de formation, l'acquisition de compétences par les éducateurs pour la création de contenu en ligne, et le renforcement de la reconnaissance des certifications. L'encouragement de la participation féminine et l'intégration des TIC dans le développement des enseignants sont soulignés comme des éléments essentiels pour favoriser des systèmes éducatifs accessibles et durables dans les contextes à faibles ressources.",
+    Presentation: "<a href='https://drive.google.com/file/d/18iLsqpC3Hxy6aJl7CynVgG2AXEKZfLNJ/view?usp=drive_link' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Kouassi Ange Aristide Molou",
+    Titles: "Enseignant-chercheur",
+    Institutions: "Université FHB-Abidjan",
+    Country: "",
+    Topic: "Quel(s) système(s) éducatif(s) pour le développement durable des pays africains : Le cas des pays francophones d'Afrique de l’Ouest ?",
+    Abstract: "Cette présentation examine les défis auxquels sont confrontés les systèmes éducatifs des pays d'Afrique de l'Ouest francophone et propose des réformes visant à atteindre un développement durable. Malgré les progrès réalisés au cours des dernières décennies, des lacunes importantes subsistent en matière d'inclusion, de qualité des infrastructures et d'alignement des politiques avec les objectifs locaux et mondiaux. Ces problèmes sont exacerbés par des défis politiques, systémiques et sociaux propres à la région. Les résultats clés soulignent la nécessité de systèmes éducatifs pluralistes et multisectoriels qui intègrent les langues locales, répondent aux disparités régionales et s'alignent sur l'Objectif de Développement Durable 4 (ODD 4). L'étude met l'accent sur l'importance de renforcer les collaborations entre les parties prenantes, d'améliorer la formation des enseignants et de garantir des environnements d'apprentissage sûrs et inclusifs. Les recommandations incluent l'harmonisation des réformes éducatives entre les pays tout en respectant les contextes locaux, et l'exploitation des facteurs endogènes (par exemple, l'adaptation des politiques, la capacité des enseignants) et exogènes (par exemple, la résolution des conflits, l'atténuation du changement climatique).",
+    Presentation: "<a href='https://drive.google.com/file/d/1CBQ8pzpghy10u9miGyTtnasIZNpnzbcJ/view?usp=drive_link' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Kousiakis Sophie",
+    Titles: "EMIS Project Manager",
+    Institutions: "Department of Informatics, University of Oslo",
+    Country: "Norvège",
+    Topic: "Management Information System strengthening",
+    Abstract: "Sophie Kousiakis et ses collègues présentent une approche d'écosystème de plateforme numérique pour renforcer les systèmes d'information sur la gestion de l'éducation (EMIS) par le biais d'une conception modulaire et participative. L'étude aborde les défis de la centralisation, de la décentralisation et de l'intégration des données, en mettant en évidence des problèmes tels que les systèmes cloisonnés, le contournement des bureaux d'éducation décentralisés (DEO) et l'harmonisation insuffisante des données. La plateforme numérique favorise la co-création de valeur locale en engageant une communauté d'exécutants, de chercheurs et d'utilisateurs, ce qui permet de mettre en place des solutions évolutives et adaptables. En Ouganda, l'approche a renforcé l'autonomisation des districts grâce à la collecte de données de routine et aux synergies intersectorielles, telles que la surveillance de la santé et l'allocation des ressources. En Gambie, elle a introduit des registres individuels, des bulletins scolaires automatisés et des partenariats universitaires pour le renforcement des capacités à long terme. Les principaux enseignements à tirer de cette expérience sont l'équilibre entre la couverture, l'intégration et la granularité des données, tout en tenant compte des besoins en matière de protection de la vie privée et d'infrastructure. Ce cadre souple et participatif de SIGE démontre le potentiel d'une planification de l'éducation résiliente, inclusive et fondée sur des données dans divers contextes, faisant ainsi progresser les pratiques de gestion durable de l'éducation.",
+    Presentation: "<a href='https://drive.google.com/file/d/1-IHn6pc-hKMO8nzvJj8ias25cSLyI-79/view?usp=drive_link' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Mahdjoub Rosa",
+    Titles: "Doctor of Education",
+    Institutions: "ONEF-France",
+    Country: "Algérie",
+    Topic: "Bilan des compétences des élèves à leur entrée au cycle primaire et l’incidence du préscolaire dans 12 pays de la région Wcaro",
+    Abstract: "L'article de Wcaro Mahdjoub Rosa analyse le rôle de l'éducation préscolaire dans l'amélioration des résultats de l'école primaire dans 12 pays d'Afrique centrale et de l'Ouest. Malgré les disparités dans l'accès à l'éducation préscolaire influencées par le genre, la localisation et le statut socio-économique, l'étude souligne les avantages potentiels d'une éducation structurée de la petite enfance. Les principales conclusions mettent en évidence la variabilité des systèmes préscolaires, notamment les différences de durée, de pratiques pédagogiques et de qualifications des enseignants. L'analyse montre que deux années d'enseignement préscolaire apportent des avantages significatifs pour la préparation à l'école primaire, tandis qu'une troisième année produit des résultats décroissants. Le temps d'instruction annuel optimal est de 600 heures. Cependant, l'impact du préscolaire varie d'un pays à l'autre, certains montrant des effets positifs importants et d'autres des résultats négligeables. Les recommandations portent sur l'optimisation de la gouvernance du préscolaire, l'amélioration de la formation des enseignants et la priorité donnée aux approches pédagogiques qui mettent l'accent sur le développement cognitif.",
+    Presentation: "<a href='https://drive.google.com/file/d/1h1gwIUBeXT0mX9tYBv3bOIt1R0-g1Q0j/view?usp=drive_link' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Maimbolwa Namuchana",
+    Titles: "Education development specialist and PhD candidate",
+    Institutions: "University of Zambia",
+    Country: "Zambia",
+    Topic: "Teacher Professional Development and innovative instructional technology for Zambian and Kenyan Secondary School Teachers: Trends, Opportunities and Way forward",
+    Abstract: "Namuchana’s study examines the state of Teacher Professional Development (TPD) and the use of innovative educational technologies in Zambian and Kenyan secondary schools. Using a concurrent mixed-methods approach with 60 participants, the research assessed awareness, engagement, and the integration of low-cost digital tools into teaching practices. The findings reveal that while 64% of teachers were aware of TPD programs, only 33% participated weekly or monthly. Teachers reported that TPD enhanced their pedagogical skills, but challenges included a lack of knowledge, limited collaboration opportunities, and insufficient exposure to affordable technologies such as YouTube, Kahoot, and WhatsApp. Notably, 68.5% used offline tools like quizzes and puzzles, while 57.4% favored traditional student-centered approaches. Recommendations emphasize the need to strengthen teacher competencies through skill-based curricula, increase resource allocation for technology integration, conduct awareness campaigns on digital tools, and enhance policies to support innovative teaching methods. These measures aim to improve teaching quality and student outcomes.",
+    Presentation: "<a href='https://docs.google.com/presentation/d/1GcyPs9tpxcXscKGWXlDxBcJsDvqEZzXP/edit?usp=drive_link&ouid=110822608714023070842&rtpof=true&sd=true' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Mamadou A. Diallo",
+    Titles: "Assistant Professor",
+    Institutions: "KARAMOKOEIN",
+    Country: "Sénégal",
+    Topic: "Intégration des activités extrascolaires ludiques pour promouvoir l'inclusion éducative dans les orphelinats africains : Une étude du programme de formation et d'éducation pour enfants défavorisés",
+    Abstract: "Dans sa présentation, Mamadou Aliou Diallo met en lumière l'intégration des activités extrascolaires dans les programmes des orphelinats pour améliorer l'inclusion éducative des enfants vulnérables en Guinée. L'étude se concentre sur le programme AVENTURE, conçu pour soutenir le développement global de l'enfant à travers des activités créatives et ludiques. Le programme aborde des défis tels que la difficulté à s’adapter aux routines scolaires, le manque de ressources et la faible participation aux activités extrascolaires. Mis en œuvre dans deux orphelinats avec 120 enfants âgés de 7 à 16 ans, le programme a montré des impacts significatifs sur le développement social, émotionnel et cognitif des participants. Les résultats incluent une amélioration de l'estime de soi, de la pensée critique, de la résolution de problèmes et des compétences interpersonnelles, avec plus de 85 % des enfants participant activement aux activités. Les filles se sont particulièrement distinguées par leur proactivité et leur enthousiasme. Les recommandations incluent l’expansion du programme AVENTURE, la formation des éducateurs, l’amélioration des infrastructures et la fourniture d’un soutien psychologique pour pérenniser et étendre l’initiative.",
+    Presentation: "<a href='https://drive.google.com/file/d/1R6zOOOrE9oX1CbGsY1WR82fQjckm0yPh/view?usp=drive_link' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Mamadou Dia",
+    Titles: "Deputy-Director",
+    Institutions: "Institute of University Pedagogy, ULSH-Bamako",
+    Country: "Mali",
+    Topic: "Communautés d’Apprentissage et professionnalisation des enseignants du Fondamental au Mali: Cas du Centre pédagogique de Nonsombougou",
+    Abstract: "Cette présentation examine l'impact des Communautés d'Apprentissage (CA) sur la professionnalisation des enseignants et les résultats éducatifs au Mali, en se concentrant sur le Centre d'Animation Pédagogique de Nonsombougou (CAP). Créé en 2013, le CAP soutient 87 structures éducatives, comprenant des écoles fondamentales, des médersas et des centres de développement de la petite enfance, avec un total de 21 730 élèves inscrits. L'étude met en lumière le rôle des CA dans la réponse aux besoins de formation identifiés — 490 besoins ont été recensés et 396 actions de formation mises en œuvre, illustrant le modèle de collaboration entre pairs. Cette approche complète la formation initiale des enseignants en favorisant le développement des compétences et en répondant aux défis émergents. Les résultats montrent une amélioration des performances scolaires et une réduction des taux d'échec des élèves dans les écoles soutenues par le CAP. Les recommandations insistent sur la nécessité de généraliser les pratiques des CA à travers le Mali, d'intégrer l'apprentissage entre pairs dans les politiques nationales de formation des enseignants et de remédier aux ratios élèves-enseignants élevés pour garantir la pérennité de l'éducation de qualité.",
+    Presentation: "<a href='https://drive.google.com/file/d/15_jn9yTOehiZ8Bc5YcQGLPMigZcTLgO6/view?usp=drive_link' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Mamosa Masia",
+    Titles: "Senior DBA",
+    Institutions: "Ministry of Education and Training",
+    Country: "Lesotho",
+    Topic: "EMIS to drive Equity and Effectiveness in Education",
+    Abstract: "This presentation evaluates Lesotho's experience with the Open EMIS educational information management system, launched in 2021 with support from UNESCO and UNICEF. Designed to improve data collection and analysis for informed decision-making, the implementation faced significant challenges, delaying the publication of education statistics for four years. Key issues included the platform's poor adaptability for managing individual teacher records, slow support processes, and a lack of ICT expertise within the ministry. Research reveals that Open EMIS required substantial customization, leading to inefficiencies. Based on this, Lesotho transitioned to DHIS2 for education, a platform recommended by the Ministry of Health as better suited to local needs. The study underscores the importance of thorough, context-specific assessments when selecting information management tools and strengthening capacities for successful implementation in African education systems.",
+    Presentation: "<a href='https://docs.google.com/presentation/d/1dPCDRRnWvCv9TKBpYj6avOFc3R4Brkec/edit?usp=drive_link&ouid=110822608714023070842&rtpof=true&sd=true' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Mangawindin Guy Romuald Ouedraogo",
+    Titles: "Associate Professor",
+    Institutions: "Ecole Normale Supérieure de Koudougou",
+    Country: "Burkina Faso",
+    Topic: "Typologie des familles et des écoles propices à la réussite des filles en mathématiques: Tendances et nuances tirées de l’examen des résultats du PASEC au Burkina Faso",
+    Abstract: "La présentation de Romuald Ouedraogo explore les facteurs contribuant à la réussite des filles en mathématiques au Burkina Faso, en s'appuyant sur les données de l'étude PASEC et du rapport CONFEMEN 2022. Malgré les progrès dans l'éducation des filles, des disparités significatives persistent en matière de réussite en mathématiques. L'étude identifie des élèves féminines 'atypiques positives' qui excellent en mathématiques malgré des circonstances difficiles, cherchant à découvrir les facteurs familiaux et scolaires qui soutiennent leur réussite. Les résultats clés révèlent que les filles qui réussissent bien en mathématiques proviennent souvent de petites familles avec des environnements académiques favorables à la maison, tels que l'accès à des matériaux éducatifs et une communication régulière avec les écoles. À l'école, la présence de professeurs femmes, des relations positives entre enseignants et élèves, ainsi qu'un environnement sécurisé et bien équipé favorisent de meilleurs résultats. L'étude met en lumière l'importance des partenariats famille-école et des pratiques pédagogiques sensibles au genre. Les recommandations incluent la promotion de la pédagogie du développement personnel, l'autonomisation des filles à travers des rôles de leadership et la lutte contre les biais sociétaux pour garantir que la réussite en mathématiques soit accessible à toutes les élèves.",
+    Presentation: "<a href='https://drive.google.com/file/d/1NaNg0TwJDvZNNacqnB2s-VDpuphF1WQh/view?usp=drive_link' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Martin Emilie",
+    Titles: "Education Policy Analyst",
+    Institutions: "UNESCO-IIEP",
+    Country: "Belgique",
+    Topic: "Utiliser les données pour planifier l'adaptation au changement climatique et la durabilité environnementale dans le secteur de l'éducation",
+    Abstract: "La présentation de Martin met en lumière l'intégration de l'adaptation au changement climatique et de la durabilité environnementale dans le secteur de l'éducation, en se concentrant sur la planification de crise et les stratégies basées sur les données. Par l'intermédiaire de l'Institut international de planification de l'éducation (IIPE) de l'UNESCO, l'initiative aide des pays comme le Zimbabwe à intégrer la résilience climatique dans les politiques et les plans d'éducation. Le Zimbabwe, l'une des nations les plus vulnérables au climat, est confronté à des défis tels que les sécheresses, les inondations et les cyclones, qui perturbent l'éducation en endommageant les infrastructures, en déplaçant les étudiants et en réduisant la fréquentation scolaire. L'approche de l'IIPE comprend des examens techniques des systèmes de données, l'intégration des données d'urgence dans les SIGE et l'identification des lacunes dans la collecte de données liées au climat. Les principales recommandations portent sur le renforcement des infrastructures scolaires résistantes au climat, la mise en œuvre de mesures de réduction des risques de catastrophe et l'utilisation de la technologie pour l'apprentissage à distance pendant les crises. Cette initiative souligne la nécessité d'exploiter les données pour identifier les populations à risque et informer les politiques qui améliorent l'équité et l'accès. Les résultats fournissent une feuille de route pour l'intégration de la durabilité et de la résilience dans les systèmes éducatifs mondiaux.",
+    Presentation: "<a href='https://drive.google.com/file/d/1gFQvgwB3Au2780cwFDgyb7onpYmKDrg7/view?usp=drive_link' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Maya Elliot",
+    Titles: "Project Manager and Research Analyst",
+    Institutions: "Brookings Institute",
+    Country: "USA",
+    Topic: "Equity Considerations When Scaling for Impact",
+    Abstract: "This presentation focuses on the challenges and strategies for scaling education reforms to ensure equity and inclusivity in Africa. Drawing on findings from the ROSIE initiative, a collaboration between the Brookings Institution and GPE KIX, the study explores the complexity of scaling innovations to reach marginalized learners. While fewer than 10% of education innovations are successfully scaled, the research highlights the importance of a systemic approach, advocating for sustainable transformations rather than isolated projects. Key challenges include the lack of disaggregated data, limited resources, and cultural and systemic biases that hinder equity-focused scaling. The study identifies four pathways to address equity in scaling: innovation design, adaptation, multi-stakeholder engagement, and equity-focused research. Policy recommendations emphasize the need to collect equity-oriented data and address deep-rooted inequalities in education systems. By prioritizing equity, reforms can improve access, quality, and inclusivity, fostering long-term positive impacts for marginalized communities across the continent.",
+    Presentation: "<a href='https://drive.google.com/file/d/1whd1EomY81UvZUpPSjznSIiZmqihHwVS/view?usp=drive_link' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Mesele Araya",
+    Titles: "Senior Research Associate",
+    Institutions: "Research for Equitable Access and Learning (REAL) Centre based at the University of Cambridge",
+    Country: "Ethiopia",
+    Topic: "School Grants and progress towards equitable learning outcomes in emerging regions: Empirical from RISE Ethiopia",
+    Abstract: "The study by Mesele Araya and colleagues assesses the impact of Ethiopia’s General Education Quality Improvement Program for Equity (GEQIP-E) in promoting equitable learning outcomes in emerging regions. Implemented from 2018 to 2022 with a $500 million investment, GEQIP-E targeted vulnerable groups, including girls, children with disabilities, and rural communities. The program introduced various school grants, including additional funding for disadvantaged regions, to enhance learning outcomes. Results revealed significant improvements in learning equity, with students in rural areas and children from poorer households showing greater progress than their urban and wealthier peers. Girls outperformed boys in some regions, while the timely disbursement of grants emerged as a key success factor. Policy recommendations emphasize the need for sustained reforms, prompt grant distribution, robust monitoring through EMIS (Education Management Information Systems), and targeted interventions for marginalized learners to ensure continued progress and educational equity in Ethiopia.",
+    Presentation: "<a href='https://drive.google.com/file/d/1Jy3SaFoTdrl5vopl3HUFI209rBtBgoIZ/view?usp=drive_link' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Michel Sagbo",
+    Titles: "Doctorant",
+    Institutions: "National Institute of Statistics and Demography (INStaD)",
+    Country: "Bénin",
+    Topic: "Effets des difficultés fonctionnelles sur le redoublement scolaire chez les enfants de 5-17 ans au Bénin",
+    Abstract: "Michel Sagbo analyse l'impact des difficultés fonctionnelles (DF) sur le redoublement scolaire des enfants âgés de 5 à 17 ans au Bénin, en utilisant les données de l'enquête MICS de 2021. Malgré les progrès réalisés dans l'éducation, 14,05 % des enfants ont redoublé une année scolaire, dont 30,57 % éprouvaient au moins une difficulté fonctionnelle. L'étude examine six types de DF—vision, mobilité, communication, audition, soins personnels et cognition—et leur influence sur les résultats académiques. Les résultats révèlent que les enfants ayant des DF sont significativement plus susceptibles de redoubler, les difficultés cognitives étant les plus déterminantes (20,81 %). Les défis sociaux et éducatifs aggravent ces résultats, mettant en évidence des inégalités systémiques. Les recommandations politiques incluent l'introduction de programmes de développement cognitif dans les écoles, le renforcement des capacités des enseignants pour répondre aux besoins divers, et l'éducation des parents sur le soutien aux enfants ayant des DF. Des interventions ciblées et des stratégies inclusives sont essentielles pour améliorer la résilience éducative et réduire les disparités, garantissant à tous les enfants des chances égales de réussite scolaire.",
+    Presentation: "<a href='https://drive.google.com/file/d/1DEWN8hqxsV_NeaI0MmuMYqN6fkWk_H7S/view?usp=drive_link' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Mwimbu Ngoma",
+    Titles: "Livelihood development professional",
+    Institutions: "VVOB",
+    Country: "Zambia",
+    Topic: "A mixed-method evaluation of IT'S PLAY: Improving Teaching Skills on Playful Learning for Africa’s Youngest",
+    Abstract: "This presentation evaluates the IT’S PLAY program, implemented by VVOB in Zambia, Rwanda, and Uganda, to enhance early childhood education (ECE) through play-based learning (PBL). The program addresses the shift toward overly academic ECE practices that neglect children’s holistic development. Funded by the LEGO Foundation, IT’S PLAY integrates play-based learning into policies, teacher professional development, and community engagement. The mixed-method evaluation in Zambia highlights significant improvements in teaching practices and child outcomes. Compared to control schools, teachers in treatment schools enhanced their skills in literacy, motor development, and creative play. Children in these schools showed greater progress in expressive vocabulary, oral comprehension, and interest in reading and writing. These findings underscore the program’s effectiveness in promoting engaging, child-centered learning. Recommendations include increasing awareness among parents and primary teachers, expanding teacher training, and addressing literacy outcome variability through contextual research on home environments and educational resources.",
+    Presentation: "<a href='https://drive.google.com/file/d/1KignXDpiqO5G4c_vcFtI5RpQfzKXQYxT/view?usp=drive_link' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Namenda Malupande",
+    Titles: "National Director",
+    Institutions: "CAMFED Zambia",
+    Country: "Zambia",
+    Topic: "Scaling a Youth-led Social Support and Mentorship Program to Improve Quality of Education for Marginalized Girls",
+    Abstract: "Malupande's presentation focuses on expanding a youth-led social support and mentorship program to improve the quality of education for marginalized girls in Tanzania, Zambia, and Zimbabwe. Poverty, discriminatory gender norms, early marriages, and limited financial resources are major barriers to girls' education, with only 3% of girls completing secondary school in Zambia and similar challenges in Zimbabwe. The CAMFED-led initiative adopts a co-creation and participatory action research approach to engage policymakers, educators, and community leaders in designing and implementing solutions. This includes integrating the 'My Better World' program and the Learner Guide program into national education systems. Key findings highlight the effectiveness of this collaborative model in addressing systemic inequalities and fostering government ownership of reforms. Policy recommendations emphasize leveraging partnerships, using evidence-based strategies, and scaling proven innovations to achieve sustainable and inclusive education systems. The initiative demonstrates the potential of mentorship and personalized support in empowering girls to overcome educational barriers.",
+    Presentation: "<a href='https://drive.google.com/file/d/12dzu7yhySXRNE6IdLwrx4v7vyKxPsLKc/view?usp=drive_link' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Ndlovu Lovemore",
+    Titles: "Specialist in education",
+    Institutions: "UNESCO",
+    Country: "Zimbabwe",
+    Topic: "Teacher Training using low-tech tools: Using WhatsApp in transforming teacher training in low resource communities in Zimbabwe",
+    Abstract: "This article highlights the use of low-tech tools, particularly WhatsApp, to transform teacher training in low-resource communities in Zimbabwe during the COVID-19 pandemic. Faced with prolonged school closures and limited infrastructure for online learning, traditional in-person training methods became impractical. WhatsApp emerged as a cost-effective and accessible alternative for professional development, enabling teachers to acquire skills for online and hybrid teaching. The program utilized synchronous and asynchronous approaches, offering flexibility and expanding access to training, particularly for marginalized and rural educators. Despite challenges such as connectivity issues and technological disparities, the initiative strengthened teachers' capacity to deliver online education and fostered peer learning through learning circles and professional communities. Recommendations include integrating WhatsApp with self-directed learning portals, incorporating hybrid learning into school activities, and developing comprehensive ICT policies.",
+    Presentation: "<a href='https://drive.google.com/file/d/1b-syN03-eU4zEOnW7OK-s-1Y-NZosRLA/view?usp=drive_link' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Nebgniga L. Lankoande O.",
+    Titles: "Certified schoolteacher and doctoral student",
+    Institutions: "Ministry of education",
+    Country: "Burkina Faso",
+    Topic: "De la langue de signes au français signé : arcane d'une inclusion scolaire d'enfants déficients auditifs en contexte intégré de bilibguisme bimodal au Burkina Faso",
+    Abstract: "Lydie Nebgniga Ouedraogo étudie l’inclusion des enfants malentendants dans des classes bilingues intégrées au Burkina Faso, en se concentrant sur la transition de la langue des signes vers le français signé dans un cadre d’éducation bilingue bimodale. L’étude analyse comment cette approche favorise la socialisation, la communication, et le développement académique des élèves déficients auditifs. La recherche a impliqué 74 enseignants utilisant des entretiens, des questionnaires et des observations en classe pour analyser les pratiques et identifier les défis. Les résultats soulignent l'efficacité de la combinaison de la langue des signes et du français signé pour améliorer la compréhension et la participation dans les classes intégrées. Toutefois, des défis persistent, notamment le manque de formation des enseignants, des ressources limitées et des stigmates sociaux. Les recommandations incluent le renforcement de la formation professionnelle des enseignants dans les méthodologies bilingues bimodales, l’élargissement de l’accès aux matériaux spécialisés, et la sensibilisation des communautés aux bienfaits de l’éducation inclusive. Cette approche met l’accent sur l’importance de créer des environnements d’apprentissage équitables qui permettent aux élèves malentendants de s'épanouir académiquement et socialement.",
+    Presentation: "<a href='https://docs.google.com/presentation/d/18jv5Ufecg7a3x-6Vw4y_vEpqT_WGlxO6/edit?usp=drive_link&ouid=110822608714023070842&rtpof=true&sd=true' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Niyomukiza Willy",
+    Titles: "Doctorant",
+    Institutions: "Institut de Formation et de Recherche Démographiques",
+    Country: "Burundi",
+    Topic: "Facteurs explicatifs de la littératie et de la numératie des enfants de moins de 5 ans au Burundi",
+    Abstract: "Cette étude examine les facteurs qui influencent le développement de la lecture, de l'écriture et du calcul chez les enfants de moins de cinq ans au Burundi, en soulignant le rôle essentiel de l'éducation de la petite enfance dans la réduction des inégalités sociales. Malgré les efforts du gouvernement pour améliorer l'accès à l'éducation préscolaire et la formation des enseignants, des défis tels que la pauvreté, l'insécurité alimentaire et les disparités régionales entravent la mise en œuvre. La recherche, menée dans des zones urbaines et rurales, a mis en évidence des écarts importants en matière de développement cognitif. Les enfants des zones urbaines et ceux issus de ménages plus aisés ont démontré de meilleures compétences en lecture et en calcul, tandis que les enfants des zones rurales et des familles à faible revenu sont restés à la traîne. L'utilisation d'Internet par la mère est également en corrélation positive avec l'acquisition de compétences, ce qui souligne l'impact des ressources du ménage et de l'accès à l'information. Les recommandations politiques comprennent des interventions ciblées pour combler les disparités entre les zones rurales et urbaines, améliorer les ressources éducatives et impliquer les parents dans les initiatives d'apprentissage précoce.",
+    Presentation: ""
+  },
+  {
+    Speakers: "Nizeyimana Jean-Paul",
+    Titles: "Lecturer",
+    Institutions: "University of Kigali",
+    Country: "Rwanda",
+    Topic: "Utilizing Predictive Analytics in Education Management Information Systems (EMIS) to Enhance Educational Equity and Resource Allocation in Rwandan Schools",
+    Abstract: "Nizeyimana’s presentation explores the integration of predictive analytics into Educational Management Information Systems (EMIS) to enhance equity and resource allocation. Using machine learning models, the study aims to identify students at risk of academic failure and optimize support interventions. Key data sources include student performance records, attendance, and socio-economic backgrounds, analyzed through advanced classification algorithms. The study addresses challenges such as high dropout rates, inconsistent academic support, and inadequate technological resources. By targeting systemic, curricular, and school-level inefficiencies, predictive analytics demonstrates its potential to improve retention rates and academic performance. The findings highlight the importance of accurate data collection and resource prioritization for successful implementation. Recommendations include increased investment in data-driven tools and infrastructure to build resilient and inclusive education systems.",
+    Presentation: "<a href='https://drive.google.com/file/d/14DnjcA5B1f9XtcDD6rcXP49-CnyDCDsX/view?usp=drive_link' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Nkemngong Atemnkeng",
+    Titles: "Research Officer",
+    Institutions: "National Centre for Education, Cameroon",
+    Country: "Cameroon",
+    Topic: "Teacher’s efficiency in using cooperative learning in facilitating the comprehension of geography in secondary schools in the Northwest and Southwest regions of Cameroon",
+    Abstract: "Nkemngong Atemnkeng examines the effectiveness of secondary school teachers in using Cooperative Learning (CL) to facilitate geography comprehension in the Fako, Meme, and Mezam divisions of Cameroon. Although CL shows clear potential for enhancing critical thinking, problem-solving, and socialization skills, this approach remains underutilized, with only 40.19% of teachers demonstrating high effectiveness in its application. Major challenges identified include inadequate teacher training, limited curriculum alignment with CL practices, and insufficient resources. Learner performance in geography has shown variations, with persistent gaps in the acquisition of geographical skills and critical thinking abilities. The study recommends implementing capacity-building workshops for in-service teachers, integrating CL strategies into pre-service teacher training programs, and making curricular adjustments to include group-based activities. Additionally, increased investment in resources and classroom management styles that foster collaborative learning is essential. Addressing these gaps will not only improve students' academic performance but also cultivate vital life skills and career readiness, particularly in underserved rural communities.",
+    Presentation: "<a href='https://drive.google.com/file/d/1FSn4RAdWwQgOmcONPf9BICP_byntbDZZ/view?usp=drive_link' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Nkundabanzi Pacifique",
+    Titles: "Assistant lecturer",
+    Institutions: "University of Kigali",
+    Country: "Rwanda",
+    Topic: "Enhancing Preservice Teacher Training Through Virtual Reality: Addressing Inclusivity and Classroom Challenges",
+    Abstract: "This study explores the integration of virtual reality (VR) into teacher training programs in Rwanda, particularly in the Musanze district. The aim is to address the challenges faced by traditional teaching placements in preparing educators to manage inclusive classrooms and meet the needs of diverse learners, including those with special needs and behavioral difficulties. Using a mixed-methods approach, the study involved 50 trainee teachers and surveyed 200 participants. The results show that VR simulations provide an immersive experience, enabling teachers to build confidence and enhance their skills in special education and classroom behavior management. Participants noted that VR was a more effective preparation tool than traditional methods alone. Integrating VR into teacher training helps improve training quality and promotes a more inclusive education system.",
+    Presentation: "<a href='https://docs.google.com/presentation/d/1tWgbd18KJVGv-KPucuTe5OYc98xiDGG4/edit?usp=drive_link&ouid=110822608714023070842&rtpof=true&sd=true' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Ntiranyibagira Constantin",
+    Titles: "Professeur",
+    Institutions: "Université du Burundi",
+    Country: "Burundi",
+    Topic: "État des lieux de la prise en compte de la petite enfance dans la lutte contre les inégalités de genre au Burundi",
+    Abstract: "L'étude de Ntiranyibagira examine l'éducation de la petite enfance (EPE) au Burundi et son rôle dans la promotion de l'égalité des sexes. Malgré les progrès réalisés en matière d'accès à l'éducation, l'étude met en évidence des inégalités persistantes ancrées dans les programmes et les pratiques d'enseignement. Les stéréotypes, tels que les représentations sexuées dans les manuels scolaires et les proverbes culturels, renforcent l'inégalité des rôles entre les garçons et les filles, limitant les opportunités pour les filles et conduisant à des taux d'abandon plus élevés. En utilisant des méthodes qualitatives, notamment des entretiens et des observations en classe, l'étude révèle un manque de contenu sensible au genre dans les programmes d'EPE et des préjugés répandus qui entravent le développement des filles. Les résultats soulignent la nécessité d'intégrer très tôt les concepts d'égalité des sexes afin de favoriser des attitudes plus inclusives chez les jeunes enfants. Les recommandations politiques comprennent la révision des programmes d'études pour tenir compte des préjugés sexistes, la mise en œuvre de programmes de formation des enseignants sur l'égalité des sexes et le lancement de campagnes de sensibilisation. Ces mesures visent à créer un système éducatif plus équitable et à donner aux jeunes apprenants les moyens de remettre en question les normes sociétales dès leur plus jeune âge.",
+    Presentation: "<a href='https://drive.google.com/file/d/1feeFJ-kINouAWMDmPpcVIt_SZMmDRT7W/view?usp=drive_link' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Nyashadzashe Mangozhe",
+    Titles: "",
+    Institutions: "Ministry of Education, Zimbabwe /IIEP",
+    Country: "Zimbabwe",
+    Topic: "Using data to plan for climate change adaptation and environmental sustainability in the education sector",
+    Abstract: "",
+    Presentation: "<a href='https://drive.google.com/file/d/12T75bu5qwBgUA2qTvB795NUTXeEafIG2/view?usp=drive_link' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Nyirahabimana Asterie",
+    Titles: "Early Childhood Development specialist",
+    Institutions: "University of Rwanda",
+    Country: "Rwanda",
+    Topic: "Effects of Adult Literacies Education Through Social Practices Approach on the Quality of Mothers’ Nurturing Care Provision in Rwanda",
+    Abstract: "Nyirahabimana's presentation examines the impact of adult education, using the Social Practices Approach (SPA), on mothers' ability to provide nurturing care to children under five in rural Rwanda. Rwanda's literacy rates remain low, with 23.3% of women over 15 being illiterate, contributing to inadequate childcare and high rates of malnutrition (33%) among children. The SPA project aimed to address these issues by equipping mothers with literacy and caregiving skills. The results showed significant improvements in maternal care practices, including enhanced communication, responsive feeding, and better hygiene practices. Mothers also created safer and more stimulating environments for their children. However, poverty remains a major barrier to fully realizing these benefits. The study recommends expanding adult literacy programs, integrating income-generating activities to empower uneducated mothers, and increasing investments in literacy education. This dual-purpose approach supports both literacy acquisition and optimal early childhood development.",
+    Presentation: "<a href='https://drive.google.com/file/d/1kHcMrtkEsMZ3kNMxU_hvFmAMUnC5MQ7u/view?usp=drive_link' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Obutu Ombuna Obed",
+    Titles: "Regional Education Coordinator",
+    Institutions: "Jesuit Refugee Service Eastern Africa",
+    Country: "Kenya",
+    Topic: "Breaking Down Barriers: Increasing Girls’ Access to and Completion of Secondary Education in Kakuma Refugee Camp, Kenya",
+    Abstract: "",
+    Presentation: "<a href='https://drive.google.com/file/d/11hqsgf0ONjjhF873665gFiPo0tgiPBWl/view?usp=drive_link' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Ochieng Benedict Ouma",
+    Titles: "Teacher of English & literature in English",
+    Institutions: "Ministry of Education",
+    Country: "Kenya",
+    Topic: "Teacher Support in Curriculum Implementation through Cross-Age Peer Tutoring in Kenya",
+    Abstract: "This study explores the impact of Cross-Age Peer Tutoring (CAPT) on improving academic performance in chemistry among secondary school students in Kisumu West Sub-County, Kenya. Faced with persistent teacher shortages and below-average performance in the Kenya Certificate of Secondary Education (KCSE) exams, CAPT was introduced as an intervention to address this gap. Using a mixed-methods approach, the study involved 344 students and measured outcomes through pre- and post-tests, questionnaires, and interviews. The results showed a significant improvement in academic performance and social skills in the experimental group compared to the control group, with CAPT fostering a student-centered learning environment. Among the recommendations are the adoption of CAPT to complement conventional teaching methods for better learning outcomes, encouraging collaboration among stakeholders, and conducting longitudinal studies to assess long-term effects.",
+    Presentation: "<a href='https://drive.google.com/file/d/1DcciqICMil_0HcXG2pbyXF2_SG7YJ1UJ/view?usp=drive_link' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Pierrette Anne Marie Noël Ndzié",
+    Titles: "Inspecteur Pédagogique National",
+    Institutions: "Ministère des Enseignements Secondaires",
+    Country: "Cameroun",
+    Topic: "Formation continue des enseignant.es du secondaire au Cameroun : modalités et résultats",
+    Abstract: "Cette étude examine l'efficacité du Développement Professionnel Continu (DPC) pour les enseignants du secondaire au Cameroun, en mettant l'accent sur l'intégration des modèles théoriques et de l'application pratique. En utilisant la théorie de l’action conjointe de Sensevy et Mercier, l’étude souligne l’importance de lier les outils méthodologiques au contenu de la formation afin de combler les lacunes en matière de connaissances et de pratiques pédagogiques. La recherche a adopté une approche qualitative, analysant des données provenant de transcriptions, d'entretiens et de questionnaires pour affiner les processus de DPC. Les résultats indiquent que l'alignement du DPC avec les besoins des enseignants améliore leur capacité à concevoir des plans de leçons, à mettre en œuvre l'intégration pédagogique et à évaluer l'apprentissage des élèves de manière efficace. Le DPC favorise également la croissance professionnelle, les bénéfices institutionnels et améliore les taux de réussite des élèves. Parmi les recommandations figurent l'utilisation de modèles de conception incrémentale tels que ADDIE pour adapter les programmes de formation, assurer l'adhésion des enseignants et promouvoir la collaboration entre les éducateurs et les institutions.",
+    Presentation: "<a href='https://docs.google.com/presentation/d/1ZooiTWqTeGKpdtbfAe-UTqdcWPZ-oR3T/edit?usp=drive_link&ouid=110822608714023070842&rtpof=true&sd=true' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Priyanka Upreti",
+    Titles: "Hub manager for early childhood education in emergencies",
+    Institutions: "Global Schools Forum",
+    Country: "",
+    Topic: "Promoting dual generation approaches for child development in early years in refugee contexts",
+    Abstract: "Priyanka Upreti's presentation explores two-generation approaches to early childhood development in refugee contexts, focusing on simultaneously addressing the needs of children and their caregivers. With nearly 16% of the world's displaced population under the age of five, crises exacerbate developmental risks for young children and their families. Current interventions often target children and caregivers separately, limiting their impact. The World School Forum established a community of practice to examine best practices, challenges, and innovations in two-generation programming. Findings highlight the importance of aligning services for children and caregivers, fostering collaboration among implementing organizations, and adopting a trauma-informed, holistic approach. Key recommendations include standardizing definitions of two-generation programming, prioritizing gender equity, and integrating mental health and psychosocial support. Additionally, improved cross-sector coordination and long-term funding mechanisms are crucial to scaling these approaches. This framework promotes family well-being, resilience, and sustainable development in crisis-affected communities, offering a model for inclusive interventions.",
+    Presentation: "<a href='https://drive.google.com/file/d/1OarEw0RzrwGO6Ka2W5llBg2gbDHdtaJT/view?usp=drive_link' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Rakotoarivony Hugette",
+    Titles: "Vice-president of the PAMOJA Africa",
+    Institutions: "Coalition Nationale Malagasy pour l'Education Pour Tous",
+    Country: "Madagascar",
+    Topic: "État de lieux des enjeux de L’éducation relative à l’environnement et au développement durable : Un aperçu de Madagascar",
+    Abstract: "Cette étude explore l'intégration de l'Éducation à l'Environnement pour le Développement Durable (EEDD) dans le système éducatif malgache, afin de répondre à la vulnérabilité du pays face aux changements climatiques et à la dégradation environnementale. Malgré des cadres politiques tels que la Politique Nationale de l'Éducation pour l'Éducation à l'Environnement (PErEDD), sa mise en œuvre reste limitée, avec l'EEDD non systématiquement incluse dans les programmes scolaires et la plupart des écoles consacrant moins de deux heures par semaine à cette discipline. L'étude identifie des lacunes dans la formation des enseignants, les outils pédagogiques et le financement, soulignant la nécessité de réformes systémiques. Les résultats montrent une large prise de conscience des enjeux climatiques parmi les parties prenantes, mais une action insuffisante en raison de contraintes de ressources et de barrières institutionnelles. Les recommandations politiques incluent la priorisation de l'EEDD dans les politiques publiques d'éducation, le développement de programmes de formation pour les enseignants, et la promotion de la collaboration intersectorielle. Il est essentiel de promouvoir des approches éducatives pratiques et pertinentes au niveau local pour renforcer la résilience face aux chocs climatiques.",
+    Presentation: "<a href='https://drive.google.com/file/d/1hFA_vF8-2G7iTQJAyzkDmfh2Ssq6rkaq/view?usp=drive_link' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Ramatoulaye Coly",
+    Titles: "Secondary school teacher",
+    Institutions: "Ministère de la Formation Professionnelle",
+    Country: "Sénégal",
+    Topic: "Accès équitable à l'éducation : Innovations pour l'éducation inclusive dans les contextes africains, en mettant l'accent sur les apprenants marginalisés et l'égalité des sexes",
+    Abstract: "Cette présentation met en évidence des innovations visant à garantir un accès équitable à une éducation de qualité en Afrique, en se concentrant sur les apprenants marginalisés et l'égalité des sexes. L'étude examine diverses initiatives mises en œuvre dans plusieurs pays africains, abordant des défis majeurs comme les disparités rurales, les écarts de genre et l'inclusion des populations vulnérables. Les principales innovations comprennent l'intégration de la technologie (ordinateurs portables à faible coût, outils numériques), des réformes des programmes scolaires promouvant les langues locales, des écoles communautaires et des programmes soutenant l'éducation des filles. Par exemple, les écoles communautaires au Mali, au Burkina Faso et au Sénégal ont réduit de manière significative les taux de décrochage, tandis que l'enseignement dans les langues locales au Ghana et au Nigéria a renforcé l'engagement des élèves. Des programmes tels que les initiatives de repas scolaires et les stratégies de genre axées sur les STEM ont amélioré l'inscription et la rétention. Les recommandations incluent l'élaboration de politiques inclusives, des partenariats durables et l'intégration de la dimension de genre dans l'éducation STEM. Ces stratégies montrent le potentiel de réformes impactantes pour transformer les résultats éducatifs en Afrique subsaharienne.",
+    Presentation: "<a href='https://drive.google.com/file/d/1Zq6s4apR2j7gyeIhkcXJrg1I0irKa81S/view?usp=drive_link' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Raviro Mawarire",
+    Titles: "Teacher and lecturer",
+    Institutions: "Joshua Nkomo Polytech",
+    Country: "Zimbabwe",
+    Topic: "An assessment of the uptake of Technical vocational courses in teacher training program",
+    Abstract: "This study evaluates the adoption of Technical and Vocational Education and Training (TVET) courses in teacher training programs at Joshua Mqabuko Nkomo Polytechnic College in Zimbabwe. Conducted among 148 students using a quasi-experimental design, the research aims to equip teachers with practical skills for self-reliance and community empowerment. While 60% of participants found the program beneficial, 40% deemed it unproductive. The results indicate that TVET programs help train versatile teachers capable of addressing real-world challenges and reducing community dependency. However, challenges such as inadequate resources, financial constraints, and overloaded curricula hinder the program's full implementation. It also helps bridge post-graduation employment gaps by fostering entrepreneurship and practical skills. Recommendations include allowing students to freely choose courses based on their interests, conducting stakeholder consultations before implementation, and securing donor funding to alleviate financial burdens.",
+    Presentation: "<a href='https://docs.google.com/presentation/d/18f6rgKOMOsWQjzS17PGqrmL_sOUTqtPZ/edit?usp=drive_link&ouid=110822608714023070842&rtpof=true&sd=true' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Renner James",
+    Titles: "Deputy Director",
+    Institutions: "Ministry of Basic Schooling and Secondary",
+    Country: "Sierra Leone",
+    Topic: "The impact of Equitable Education Access for Inclusive Education in Africa, A Case Study: Sierra Leone",
+    Abstract: "Renner's study assesses the impact of equitable access to education in Sierra Leone, highlighting the government's commitment to inclusion and human capital development. Drawing on policies such as the 1991 Constitution, the 2023 Education Act, and the Radical Inclusion in Schools national policy, the initiative has reduced barriers for marginalized groups, including pregnant students, students with disabilities, and those from low-income backgrounds. With 22% of national revenue allocated to education in 2018, Sierra Leone is a global leader in educational investment. The 2022 Annual School Census shows progress in enrollment and reduced marginalization, but challenges remain in policy enforcement, resource provision, and inclusivity in basic learning. Recommendations include universal school meal programs, assistive devices for students with disabilities, specialized teacher training modules, and placing nurses in secondary schools.",
+    Presentation: "<a href='https://docs.google.com/presentation/d/1cPIKxAofWBfeFhoc8BWY9y38FB2a5RAw/edit?usp=drive_link&ouid=110822608714023070842&rtpof=true&sd=true' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Sani Gigo",
+    Titles: "Inventeur",
+    Institutions: "AIN-eurêka",
+    Country: "Niger",
+    Topic: "Étude de la formule classique de calcul du taux de réussite en milieu scolaire",
+    Abstract: "Gigo examine de manière critique la formule traditionnelle utilisée pour calculer les taux de réussite scolaire, mettant en lumière ses limites pour refléter fidèlement les réalités des systèmes éducatifs au Niger et au-delà. L’étude souligne comment cette formule, largement utilisée pour les rapports statistiques, conduit souvent à une surestimation ou à une sous-estimation des résultats, créant ainsi une méfiance parmi les parties prenantes et perpétuant les injustices systémiques, en particulier pour les apprenants en difficulté. L'analyse identifie des défauts mathématiques, statistiques et pédagogiques dans l'approche traditionnelle, proposant une alternative — 'Gigo Quantification' — comme méthode plus fiable. Cette approche innovante vise à mieux prendre en compte les dimensions qualitatives et quantitatives de l'éducation, fournissant des aperçus actionnables pour la gouvernance et le suivi des progrès vers l'Objectif de Développement Durable 4. Les recommandations politiques incluent l'abandon de la formule traditionnelle, la promotion de l'adoption de la 'Gigo Quantification', et l'investissement dans la recherche pour développer des outils de mesure robustes des résultats éducatifs.",
+    Presentation: "<a href='https://drive.google.com/file/d/1emq1NRvtcmceXBokyIZoaf1bqzIJpS8o/view?usp=drive_link' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Seedy Jallow",
+    Titles: "EMIS Project Manager",
+    Institutions: "Ministry of Education",
+    Country: "Gambia",
+    Topic: "Sustainable EMIS Shift: Experiences from The Gambia",
+    Abstract: "This presentation highlights the transformation of The Gambia’s Education Management Information System (EMIS) to support sustainable and inclusive education, in alignment with the SDG and CESA frameworks. Traditional EMIS approaches primarily focused on statistics but lacked the capacity to measure learning outcomes or provide early warning systems. The Gambia addressed these gaps by leveraging the digital DHIS2 platform, which offers affordable and scalable solutions tailored to developing countries. The reformed EMIS prioritizes six dimensions: decentralization, integration, coverage, data availability, frequency, and granularity. Key innovations include simplified school-level reporting, improved data accessibility, and enhanced information dissemination. A dedicated postgraduate program was established to strengthen EMIS capacity and local ownership, ensuring sustainability. Challenges remain, such as implementing a unique identification system, establishing robust legal frameworks, and addressing data privacy concerns. The Gambia’s experience demonstrates the importance of political commitment, administrative support, and investment in local capacity for effective education system reform.",
+    Presentation: "<a href='https://docs.google.com/presentation/d/16unq7ReF_YFlWdGfJOL2eYWXg9egs45W/edit?usp=drive_link&ouid=110822608714023070842&rtpof=true&sd=true' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Shima Lydie",
+    Titles: "Education and gender specialist",
+    Institutions: "Laterite",
+    Country: "Rwanda",
+    Topic: "Quality teaching for quality learning: Student learning outcomes in Rwandan secondary education",
+    Abstract: "Lydie Shima assesses the impact of the Leaders in Teaching program on improving the quality of teaching and student learning outcomes in Rwandan secondary schools. Facing challenges such as rising enrollment and limited resources, the study highlights significant progress in teachers' content mastery and its correlation with better student performance, particularly in mathematics. Using teacher content knowledge, pedagogical practices, and classroom instruction as indicators, the research reveals that greater improvements were observed among teachers in less selective schools compared to highly selective 'schools of excellence.' Female teachers showed twice as much improvement in math knowledge as their male counterparts. Enhanced teacher mastery particularly benefited girls and disadvantaged students. The study underscores the need to reevaluate and strengthen professional development programs to focus on content mastery and pedagogical skills. Such reforms are crucial to narrowing achievement gaps and ensuring long-term progress in delivering quality education for all students in Rwanda.",
+    Presentation: "<a href='https://docs.google.com/presentation/d/1yFToQGoK08DNlCxM66nM6-xxf0MRAPCQ/edit?usp=drive_link&ouid=110822608714023070842&rtpof=true&sd=true' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Tamara Jacod",
+    Titles: "Education specialist",
+    Institutions: "Fondation Paul Gérom-Lajoie",
+    Country: "Canada",
+    Topic: "The Charlevoix Report: an analysis of 21 Canadian education projects",
+    Abstract: "La présentation de Tamara examine l'impact de la Déclaration de Charlevoix sur l'éducation des filles dans des contextes fragiles et de crise. Annoncée lors du Sommet du G7 en 2018, l'initiative dirigée par le Canada a engagé 400 millions de dollars pour promouvoir une éducation de qualité pour les filles, les adolescentes et les femmes dans les pays en développement affectés par les conflits. L'étude, réalisée sur 21 projets, a employé une méthodologie qualitative en trois phases, comprenant l'analyse de documents et des interviews avec 39 parties prenantes. Les résultats montrent des réalisations significatives, avec plus de 627 000 filles et 335 000 garçons bénéficiant des interventions, ainsi que le soutien de 25 591 éducateurs et 1 454 écoles. Les facteurs de succès incluent l'engagement communautaire, l'innovation et l'adaptabilité aux contextes locaux. Les recommandations politiques insistent sur la nécessité d'un financement flexible sur plusieurs années, l'intégration de la consolidation de la paix et de la résilience climatique, et l'inclusion intentionnelle des hommes et des garçons en tant qu'alliés de l'égalité des genres. Les projets futurs devraient localiser les interventions et favoriser un apprentissage partagé au sein des communautés de pratique, pour renforcer la durabilité et l'efficacité des initiatives éducatives dans les contextes de crise.",
+    Presentation: "<a href='https://drive.google.com/file/d/1arfQk1fho89VYUK9nYjxNR6kpF5RNcv5/view?usp=drive_link' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Tani Wirngo Ernestine",
+    Titles: "Senior Lecturer",
+    Institutions: "Higher Teachers’ Training College of Yaoundé",
+    Country: "Cameroun",
+    Topic: "L’impact de la formation des enseignants sur la mise en œuvre efficace des pratiques pédagogiques inclusives dans les écoles primaires au Cameroun",
+    Abstract: "L'étude de Wirngo Tani examine l'impact de la formation des enseignants sur la mise en œuvre des pratiques pédagogiques inclusives pour les apprenants déplacés internes (ADI) dans les écoles primaires du Cameroun. Dans un contexte de crise humanitaire prolongée affectant 1,9 million d'apprenants déplacés, l'éducation inclusive revêt une importance capitale pour répondre aux défis psychosociaux et académiques rencontrés par les enfants vulnérables. Les résultats révèlent que seulement 14,7 % des enseignants se sentent confiants dans la mise en œuvre de la pédagogie inclusive, en raison d'une formation initiale insuffisante, malgré une exposition ultérieure au développement professionnel. Des stratégies efficaces telles que l'enseignement différencié, l'enseignement informé par les traumatismes et l'adaptabilité culturelle sont sous-utilisées, principalement en raison de contraintes de ressources, de la taille des classes et d'une préparation insuffisante des enseignants. Les recommandations incluent l'intégration de l'éducation inclusive et du soutien psychosocial dans les curricula de formation des enseignants, la promotion du développement professionnel continu, et le renforcement des activités scolaires, telles que les arts et le sport, pour améliorer le bien-être des élèves.",
+    Presentation: "<a href='https://drive.google.com/file/d/1xAp_0llnJ2TnrhkPrJqnkof3KK1bjNfp/view?usp=drive_link' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Tcheundjio Rosaline",
+    Titles: "Chargée de Cours",
+    Institutions: "Université de Yaoundé 1",
+    Country: "Cameroun",
+    Topic: "Autorégulation des pratiques en éducation inclusive et niveau d'adaptation des élèves ayant le TSA sans déficience intellectuelle au Cameroun",
+    Abstract: "Tcheundjio explore le rôle des pratiques pédagogiques autorégulées pour améliorer l'adaptation des enfants atteints de trouble du spectre de l'autisme (TSA) sans déficience intellectuelle au Cameroun. Malgré l'accent croissant mis sur l'éducation inclusive, ces enfants rencontrent des défis tels que la stigmatisation, la marginalisation et des approches pédagogiques mal adaptées. L'étude révèle que 95 % des enseignants manquent de ressources ou de formation pour soutenir efficacement ces élèves. À travers une approche mixte impliquant 105 enseignants dans cinq écoles, la recherche montre que les pratiques autorégulées, telles que la planification consciente, la définition d'objectifs et la régulation interpersonnelle, améliorent considérablement l'adaptation et l'intégration des élèves autistes. Les stratégies clés comprennent l'utilisation d'aides visuelles, une communication claire, des environnements structurés et l'apprentissage coopératif. Les recommandations soulignent le besoin de formation spécialisée pour les enseignants, de ressources adaptées et de réformes systémiques pour favoriser l'inclusion.",
+    Presentation: "<a href='https://drive.google.com/file/d/1ZzfumsM5sBtSlFL4vZ4GaqcYPORoke7p/view?usp=drive_link' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Temechegn Engida",
+    Titles: "Program Officer",
+    Institutions: "IICBA UNESCO",
+    Country: "Ethiopia",
+    Topic: "The Status of Digitalization of Universities in Africa",
+    Abstract: "This study assesses the state of digitization in African universities, exploring how higher education institutions integrate digital technologies into teaching, learning, research, and administration. Drawing on systematic reviews, reflections on CESA 16-25, and previous UNESCO-IICBA interventions in ICT, the study identifies significant gaps and opportunities. Key findings reveal uneven progress among countries such as Egypt, Ethiopia, Nigeria, and South Africa, with challenges related to digital infrastructure, connectivity, and policy alignment. While student readiness for digital learning is high in some regions, disparities persist among academic staff and across institutions. The lack of emphasis on artificial intelligence and digital skills in curricula further limits the transformative potential of digitization. Recommendations include strengthening digital infrastructure, promoting digital literacy training, integrating AI skills into training programs, and expanding IICBA’s capacity-building initiatives. These measures aim to prepare African universities for a digital future, fostering equitable access to quality education and enhancing global competitiveness.",
+    Presentation: "<a href='https://drive.google.com/file/d/1DY0ninSw_ZiU24KIjQqJm0NBmAKtVes_/view?usp=drive_link' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Tuyisenge Ephrem",
+    Titles: "National TMIS Coordinator",
+    Institutions: "Open University of Tanzania",
+    Country: "Tanzania",
+    Topic: "Transforming Basic Education: Integrating Robotics into Lower Primary, Upper Primary, and Secondary Classrooms in Rwanda",
+    Abstract: "Ephrem Tuyisenge's study examines the integration of robotics into primary and secondary schools in Rwanda, as part of a national effort to modernize education and prepare students for a technology-driven future. The initiative aims to enhance student engagement, creativity, and problem-solving skills while fostering competencies in science, technology, engineering, and mathematics (STEM). Using a mixed-method approach, the research collected data from 16 schools, involving 180 students, 32 teachers, and 16 administrators. The results show a significant increase in student interest, with 85% reporting greater engagement in classes and 78% demonstrating improved problem-solving abilities. Additionally, 70% of teachers reported increased confidence in implementing STEM activities. Despite these successes, challenges remain, including the need for ongoing teacher training, improved resources, and sustained government support. Recommendations emphasize expanding teacher capacity, sharing best practices, and securing long-term investment in STEM infrastructure.",
+    Presentation: ""
+  },
+  {
+    Speakers: "Walugembe Patrick",
+    Titles: "Program Officer",
+    Institutions: "International Development Research Centre",
+    Country: "Kenya",
+    Topic: "Leaving no one behind: Educational options for out-of-school children and youth",
+    Abstract: "This presentation addresses the challenges and solutions for out-of-school children and youth (OOSCY) and those at risk of dropping out in sub-Saharan Africa. With 244 million young learners worldwide not attending school, the study highlights Accelerated Education Programs (AEPs) as a key strategy to provide inclusive and flexible education. These programs have improved access but require scaling up to fully address the challenges. The research underscores supply-side barriers, such as inadequate infrastructure and violence, as well as demand-side issues, including socio-cultural norms and financial constraints. It emphasizes gender-equity strategies, such as empowering girls through safe spaces and community awareness campaigns. Policy recommendations advocate for integrating AEPs into government budgets, strengthening ties with formal schools, and improving inclusive infrastructure. The study highlights the effectiveness and adaptability of AEPs while addressing gaps in policies, funding, and vocational training, offering concrete pathways to ensure equitable education for vulnerable learners.",
+    Presentation: "<a href='https://drive.google.com/file/d/1_HhfaUJ1g2IuiFLgM1ryIaa2U8z68ycA/view?usp=drive_link' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Wepngong Emmanuel",
+    Titles: "Pedagogic Advisor",
+    Institutions: "KIX STEPS project",
+    Country: "Cameroun",
+    Topic: "Developing and trailing an innovative preschool math program in Cameroon",
+    Abstract: "Cet exposé présente un programme de mathématiques préscolaire innovant testé au Cameroun, qui se concentre sur l'enseignement des nombres en tant que composites plutôt qu'en tant que résultats d'un comptage. Les approches traditionnelles de l'apprentissage précoce du calcul mettent l'accent sur le comptage, ce qui peut limiter la compréhension des apprenants et entraver la compétence mathématique à long terme. Le programme permet aux enfants d'âge préscolaire d'appréhender les nombres comme des combinaisons de groupes plus petits, ce qui favorise une compréhension conceptuelle plus profonde. Les premiers résultats ont montré que les enfants pouvaient représenter efficacement les nombres jusqu'à 10 comme des composites sans compter, ce qui met en évidence leur capacité naturelle à regrouper et à combiner des collections. Le plus grand défi a été d'aider les enseignants à surmonter les méthodes basées sur le comptage. Les apprenants qui ont suivi le programme sont entrés en première année avec une solide compréhension fondamentale des nombres. Le projet recommande d'étendre les essais à divers contextes avant de généraliser l'approche. L'enseignement des nombres en tant que composites peut renforcer l'apprentissage des mathématiques en améliorant très tôt les compétences en matière de calcul.",
+    Presentation: "<a href='https://drive.google.com/file/d/13nfYptt9iUilZSHUZSl6-gkerw4bIaOm/view?usp=drive_link' target='_blank'>Download</a>"
+  },
+  {
+    Speakers: "Zimpita Valentino",
+    Titles: "Deputy Director of Higher Education and KIX Focal Person in Malawi",
+    Institutions: "Ministry of Education",
+    Country: "Malawi",
+    Topic: "Reforming Curriculum beyond Academic Achievements: A Reflection on Citizenship Education and Violence in Secondary Schools in Malawi",
+    Abstract: "Tipitana Zimpita examines the link between curriculum design and violence in Malawian secondary schools. Violence, including property damage and physical injuries, has increased in schools since the removal of Citizenship and Civic Education (CCE) from the curriculum. Using a mixed-method approach with 103 participants across five schools, the study explores whether the absence of CCE contributed to this issue or if other factors were at play. The findings reveal that while conflict management is taught in Social Studies and Life Skills courses, the focus remains on academic achievement rather than instilling values and attitudes. Key factors exacerbating violence include poor understanding of human rights, inadequate school management, and unprofessional teacher conduct. Policy recommendations include integrating the affective domain into the curriculum, making Social Studies or Life Skills compulsory, and training school leaders in conflict management. Addressing these issues ensures students develop the values, morals, and attitudes needed for peaceful coexistence alongside academic success.",
+    Presentation: "<a href='https://drive.google.com/file/d/1vsET756Mr2gTUN0XnCR_hwn69XcJert3/view?usp=drive_link' target='_blank'>Download</a>"
+  },
+            // Add all other entries here...
+        ];
+
+        $(document).ready(function() {
+            // Sort data alphabetically by Speakers name
+            data.sort((a, b) => a.Speakers.localeCompare(b.Speakers));
+
+            const table = $('#authorsTable').DataTable({
+                data: data,
+                columns: [
+                    { data: "Speakers" },
+                    { data: "Titles" },
+                    { data: "Institutions" },
+                    { data: "Country" },
+                    { data: "Topic" },
+                    { 
+                        data: "Abstract",
+                        render: function(data, type, row) {
+                            return `<a href="#" class="abstract-link" data-abstract="${encodeURIComponent(data)}" data-lang="${row.Language}">${
+                                row.Language === 'fr' ? 'Lire le résumé' : 'Read Abstract'
+                            }</a>`;
+                        }
+                    },
+                    { data: "Presentation" }
+                ]
+            });
+
+            // Modal functionality
+            const modal = document.getElementById("abstractModal");
+            const modalContent = document.getElementById("modalContent");
+            const closeBtn = document.getElementById("closeModal");
+
+            $('#authorsTable').on('click', '.abstract-link', function(e) {
+                e.preventDefault();
+                const abstract = decodeURIComponent($(this).data('abstract'));
+                modalContent.innerHTML = abstract;
+                modal.style.display = "block";
+            });
+
+            closeBtn.onclick = function() {
+                modal.style.display = "none";
+            }
+
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+        });
+    </script>
+    
+    
+      
+      
+      
+
+
+  <!-- Scripts -->
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <script>
+    let currentSlides = {
+      'slider2024': 0,
+      'slider2023': 0,
+      'slider2022': 0
+    };
+
+    function moveSlide(sliderId, direction) {
+      const slider = document.getElementById(sliderId);
+      const dots = document.getElementById(`dots${sliderId.substring(6)}`);
+      const totalSlides = slider.children.length;
+      
+      currentSlides[sliderId] += direction;
+      
+      if (currentSlides[sliderId] >= totalSlides) {
+        currentSlides[sliderId] = 0;
+      } else if (currentSlides[sliderId] < 0) {
+        currentSlides[sliderId] = totalSlides - 1;
+      }
+      
+      slider.style.transform = `translateX(-${currentSlides[sliderId] * (100 / totalSlides)}%)`;
+      
+      // Update dots
+      Array.from(dots.children).forEach((dot, index) => {
+        dot.classList.toggle('active', index === currentSlides[sliderId]);
+      });
+    }
+
+    function goToSlide(sliderId, index) {
+      const slider = document.getElementById(sliderId);
+      const dots = document.getElementById(`dots${sliderId.substring(6)}`);
+      const totalSlides = slider.children.length;
+      
+      currentSlides[sliderId] = index;
+      slider.style.transform = `translateX(-${currentSlides[sliderId] * (100 / totalSlides)}%)`;
+      
+      // Update dots
+      Array.from(dots.children).forEach((dot, i) => {
+        dot.classList.toggle('active', i === currentSlides[sliderId]);
+      });
+    }
+    
+    // Blog language switching
+    function changeBlogLanguage(blogBlock, lang) {
+      // Update active tab
+      const tabs = blogBlock.querySelector('.lang-tabs');
+      tabs.querySelectorAll('.lang-tab').forEach(tab => {
+        tab.classList.toggle('active', tab.textContent.toLowerCase().includes(lang));
+      });
+      
+      // Update active content
+      blogBlock.querySelectorAll('.lang-content').forEach(content => {
+        content.classList.toggle('active', content.getAttribute('data-lang') === lang);
+      });
+    }
+    
+    // Auto-advance sliders
+    setInterval(() => {
+      moveSlide('slider2024', 1);
+    }, 5000);
+  </script>
+</body>
+</html>
